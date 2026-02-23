@@ -46,7 +46,7 @@ function HeroText() {
       variants={containerVariants}
       initial="hidden"
       animate={controls}
-      className="space-y-4 text-center md:text-left"
+      className="space-y-0 text-center md:text-left"
     >
       {heroLines.map((line, i) => (
         <motion.p
