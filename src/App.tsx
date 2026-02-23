@@ -451,7 +451,7 @@ const Mentorship = () => {
                 <div>
                   <h4 className="font-bold text-lg">Build with Oyo 2026</h4>
                   <p className="text-gray-400">
-                    Facilitated frontend track—teaching controlled components,
+                    Facilitated frontend track teaching controlled components,
                     mocks, and validation to 50+ aspiring developers.
                   </p>
                 </div>
@@ -584,7 +584,7 @@ const ContactModal = ({
                       required
                       type="email"
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                      placeholder="your@email.com"
+                      placeholder="temilorunpopoola2677@email.com"
                     />
                   </div>
                   <div>
@@ -628,23 +628,26 @@ const Footer = () => (
       </p>
       <div className="flex space-x-6 mt-6 md:mt-0">
         <a
-          href="#"
+          href="https://github.com/Popthemy"
           aria-label="GitHub Profile"
           className="text-gray-400 hover:text-primary transition-colors"
+          target="_blank"
         >
           <Github size={20} />
         </a>
         <a
-          href="#"
+          href="https://www.linkedin.com/in/popoola-oluwatemilorun"
           aria-label="LinkedIn Profile"
           className="text-gray-400 hover:text-primary transition-colors"
+          target="_blank"
         >
           <Linkedin size={20} />
         </a>
         <a
-          href="#"
+          href="mailto:temilorunpopoola2677@gmail.com"
           aria-label="Email Contact"
           className="text-gray-400 hover:text-primary transition-colors"
+          target="_blank"
         >
           <Mail size={20} />
         </a>

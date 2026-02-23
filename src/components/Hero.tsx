@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle2, Github, Linkedin } from "lucide-react";
 const Skeleton = ({ className }: { className?: string }) => (
   <div className={`skeleton ${className}`} />
 );
+
 const Hero = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -91,21 +92,23 @@ const Hero = () => {
               href="#projects"
               className="bg-primary text-white px-8 py-4 rounded-full font-bold hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center group"
             >
-              View My Work{" "}
+              View My Work
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
             <div className="flex space-x-4 items-center px-4">
               <a
-                href="#"
+                href="https://github.com/Popthemy"
                 aria-label="GitHub Profile"
                 className="text-gray-400 hover:text-primary transition-colors"
+                target="_blank"
               >
                 <Github size={24} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/popoola-oluwatemilorun"
                 aria-label="LinkedIn Profile"
                 className="text-gray-400 hover:text-primary transition-colors"
+                target="_blank"
               >
                 <Linkedin size={24} />
               </a>
