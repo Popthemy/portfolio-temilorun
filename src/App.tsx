@@ -30,14 +30,15 @@ import Hero from "./components/Hero";
 interface Project {
   id: string;
   title: string;
-  image: string;
+  images: Object[];
   timeline: string;
   problem: string;
   solution: string;
   tech: string[];
   impact: string;
-  lessons: string;
-  links: { github?: string; demo?: string };
+  links: { github?: string; live?: string };
+  hook: string;
+  cta: string;
 }
 
 // --- Data ---
@@ -45,72 +46,217 @@ interface Project {
 const PROJECTS: Project[] = [
   {
     id: "bookhall",
-    title: "Bookhall (Django MVT)",
-    image: "https://picsum.photos/seed/bookhall/600/400",
-    timeline: "Beginner basic form → Optimized auth",
-    problem: "Manual booking processes were slow and error-prone.",
+    title: "Bookhall",
+    links: { github: "https://github.com/Popthemy/Booking_Hall_24", live: "#" }, // add real links if deployed
+    images: [
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771899939/list_of_halls_nqvj9r.png",
+        alt: "Bookhall showing available halls for scheduled classes, and booking status",
+        description:
+          "Central view of all halls with real-time availability and class schedule",
+      },
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771899937/showing_schedule_list_mnlr0l.png",
+        alt: "central list of hall schedule showing booked slots, and class details",
+        description:
+          "Central view of all halls with real-time availability and class schedule",
+      },
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771899938/form_for_scheduling_hall_jhkkk7.png",
+        alt: "Booking creation form with hall selection automatically,, and course details",
+        description: "Form used by lecturers or reps to reserve a hall",
+      },
+    ],
+    timeline: "Full MVT system with real-time availability",
+    problem:
+      "During 200 level, classes were frequently cancelled due to hall unavailability. No single source of truth existed reps often gave conflicting information, leading to confusion and wasted time checking halls physically.",
     solution:
-      "Developed a comprehensive dashboard system for automated bookings.",
-    tech: ["Django", "PostgreSQL", "Bootstrap"],
-    impact: "Streamlined over 100+ bookings in the first month.",
-    lessons:
-      "Learned the importance of team schema iteration and database normalization.",
-    links: { github: "#" },
+      "Built a Django MVT application that provides a central dashboard for each hall where anyone can view current hall bookings, see which halls are in use, and book slots with clear visibility of conflicts.",
+    tech: [
+      "Django MVT",
+      "Jinja2 Templates",
+      "PostgreSQL",
+      "Bootstrap",
+      "Cloudinary",
+    ],
+    impact:
+      "Created a single source of truth that could prevent class cancellations and reduce physical checks. Demonstrated in university context with real scheduling pain point solved.",
+    hook: "No more surprise class cancellations see hall availability instantly.",
+    cta: "View Project →",
   },
+
   {
     id: "ecogather",
-    title: "EcoGather Map",
-    image: "https://picsum.photos/seed/ecogather/600/400",
-    timeline: "Beginner pins → Notes/API integration",
-    problem: "Users often forgot specific environmental data locations.",
-    solution: "Built an interactive map with persistent pins and data notes.",
-    tech: ["React", "Leaflet", "json-server"],
-    impact: "Created a usable memory tool for field researchers.",
-    lessons:
-      "Bridged the gap between frontend interactivity and backend data persistence.",
-    links: { github: "#" },
+    title: "EcoGather",
+    links: { github: "https://github.com/Popthemy/EcoGather", live: "#" },
+    images: [
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771901900/portfolio/ecogather_homepage_mzwkwo.png",
+        alt: "EcoGather event program dashboard showing schedule, timings, and sections",
+        description: "Main program view with timeline and section details",
+      },
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771901900/portfolio/ecogather_responsive_desgin_g6ut6d.png",
+        alt: "Mobile view of EcoGather showing event schedule on phone",
+        description: "Responsive mobile layout for on-the-go planning",
+      },
+      {
+        url: "https://res.cloudinary.com/dtbf1jnph/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1771901900/portfolio/ecogather_test_cases_nhsyap.png",
+        alt: "Pytest test coverage report showing high coverage for EcoGather backend",
+        description: "Comprehensive test coverage ensuring reliability",
+      },
+    ],
+    timeline: "Static list → Interactive, sustainable event planner",
+    problem:
+      "Planning events like Sunday services or programs required printing large order-of-program sheets, increasing cost and paper waste. Attendees had no easy way to know exact timings or decide which sections to attend.",
+    solution:
+      "Created a platform where event organizers upload the program once, and attendees view the full schedule digitally—reducing printing costs and enabling better personal planning.",
+    tech: [
+      "Django",
+      "Django REST Framework",
+      "PostgreSQL",
+      "Pytest (test coverage)",
+      "Bootstrap",
+    ],
+    impact:
+      "Eliminated paper waste for events, lowered planning costs, and allowed attendees to know exact section timings. Used in real church/event contexts to improve sustainability and planning.",
+    hook: "Plan your event day without printing—see the full program anytime.",
+    cta: "View Project →",
   },
+
   {
     id: "ecommerce-api",
     title: "E-Commerce API",
-    image: "https://picsum.photos/seed/ecommerce/600/400",
-    timeline: "Beginner endpoints → RBAC/Payments",
-    problem: "Insecure and slow transaction processing in legacy systems.",
+    links: { github: "#", live: "#" },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=E-Commerce+API+Endpoints",
+        alt: "Postman collection showing e-commerce API endpoints for products, cart, and orders",
+        description: "API documentation and testing in Postman",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=E-Commerce+RBAC",
+        alt: "Role-Based Access Control dashboard for admin, seller, and buyer roles",
+        description: "RBAC interface demonstrating permission management",
+      },
+    ],
+    timeline: "Full secure e-commerce backend with payments",
+    problem:
+      "Building e-commerce features without proper authentication, access control, or payment integration led to security risks and poor user experience.",
     solution:
-      "Engineered a secure REST API with Role-Based Access Control and payment gateway integration.",
-    tech: ["Django Rest Framework", "Flutterwave", "JWT"],
+      "Collaboratively developed a complete REST API with product listing, cart, orders, Cloudinary image storage, Flutterwave payments, RBAC, JWT authentication, and OTP verification.",
+    tech: [
+      "Django Rest Framework",
+      "Flutterwave",
+      "Cloudinary",
+      "JWT",
+      "OTP Auth",
+      "PostgreSQL",
+    ],
     impact:
-      "Reduced transaction processing time by 30% while enhancing security.",
-    lessons: "Deep dived into security tradeoffs and financial data integrity.",
-    links: { github: "#" },
+      "Enabled secure transactions, role-specific access, and reliable media handling. Reduced potential vulnerabilities and supported full checkout flow.",
+    hook: "Secure, scalable e-commerce backend—ready for real payments and users.",
+    cta: "View Project →",
   },
+
   {
     id: "load-calculator",
     title: "Load Calculator",
-    image: "https://picsum.photos/seed/calculator/600/400",
-    timeline: "Beginner static → Dynamic validation",
-    problem: "Manual calculations for seminar logistics were tedious.",
+    links: { github: "#", live: "https://load-calc.onrender.com/" },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=Load+Calculator+Full+View",
+        alt: "Full Load Calculator interface showing appliance inputs and solar/battery calculations",
+        description:
+          "Main view with added appliances and real-time system results",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=Load+Calculator+Input+Form",
+        alt: "Appliance addition form with power rating and usage hours",
+        description: "Interactive input section for adding household devices",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=Load+Calculator+Results",
+        alt: "System calculations output: Total Power, Daily Energy, Battery Ah, Solar Panels W",
+        description: "Dynamic results section after data entry",
+      },
+      {
+        url: "https://via.placeholder.com/400x600?text=Load+Calculator+Mobile",
+        alt: "Mobile-responsive view of the Load Calculator tool",
+        description: "Responsive design on smaller screens",
+      },
+    ],
+    timeline:
+      "Load calculator → Dynamic, interactive tool with validation & export",
+    problem:
+      "Manual power load calculations for solar and inverter setups were time-consuming and error-prone, especially for homes, seminars, and small businesses in Nigeria planning off-grid solutions.",
     solution:
-      "Created a lightweight, framework-free interactive tool for dynamic estimates.",
-    tech: ["Vanilla JS", "HTML", "CSS"],
-    impact: "Automated estimates for multiple regional seminars.",
-    lessons:
-      "Proved that framework-free code can be highly efficient for specific utilities.",
-    links: { github: "#" },
+      "Built a lightweight, framework-free interactive tool that lets users add appliances, input power ratings and daily usage hours, then instantly calculates total load, daily energy, battery sizing, and solar panel requirements.",
+    tech: ["Vanilla JavaScript", "HTML", "CSS", "Render"],
+    impact:
+      "Automated estimates for multiple regional seminars and personal use cases; enables faster, more accurate planning for solar/inverter investments without spreadsheets or guesswork.",
+    hook: "Stop guessing your power needs—calculate exactly what solar setup will keep the lights on.",
+    cta: "Try it live →",
   },
+
   {
     id: "cert-gen",
     title: "Certificate Generator",
-    image: "https://picsum.photos/seed/cert/600/400",
-    timeline: "Beginner scripts → Secure system",
-    problem: "Manual issuance of 1,000+ certificates was a bottleneck.",
+    links: { github: "#", live: "#" },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=Certificate+Generator+Dashboard",
+        alt: "Certificate generator admin dashboard showing participant list and issuance status",
+        description: "Admin interface for managing and issuing certificates",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=Generated+Certificate+Sample",
+        alt: "Sample generated certificate with participant name, event, and QR code",
+        description: "Final output certificate with branding and verification",
+      },
+    ],
+    timeline: "Scripts → Secure, scalable issuance system for 1,000+ users",
+    problem:
+      "Manually issuing certificates for events (e.g., LinkedIn Local Lagos) was slow, error-prone, and difficult to scale for large groups.",
     solution:
-      "Built an API-driven generator that automates the entire issuance pipeline.",
-    tech: ["DRF", "Cloudinary", "Celery"],
-    impact: "Automated issuance for over 1,000 participants instantly.",
-    lessons:
-      "Shortened team feedback loops through automated delivery systems.",
-    links: { github: "#" },
+      "Collaborated on an API-driven certificate generator that automates bulk issuance, includes branding, QR verification, and secure delivery—used to drive event publicity.",
+    tech: ["Django Rest Framework", "Cloudinary", "Celery", "PostgreSQL"],
+    impact:
+      "Automated issuance for over 1,000 participants instantly; improved event branding and follow-up engagement through verifiable digital certificates.",
+    hook: "Issue hundreds of certificates in seconds—not hours.",
+    cta: "View Project →",
+  },
+
+  {
+    id: "clinical-trial-viewer",
+    title: "Clinical Trial Viewer",
+    links: {
+      github: "https://github.com/Popthemy/clinic-trial-viewer",
+      live: "#",
+    },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=Clinical+Trials+Dashboard",
+        alt: "Clinical Trial Viewer dashboard showing fetched trial list from ClinicalTrials.gov",
+        description:
+          "Main interface displaying trial title, status, location, and summary",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Image",
+        alt: "AI-generated visual representation of a clinical trial process",
+        description: "OpenAI-generated image enhancing trial understanding",
+      },
+    ],
+    timeline: "Modern Next.js + TypeScript viewer with AI visuals",
+    problem:
+      "Clinical trial information on ClinicalTrials.gov is scattered and hard to digest quickly for researchers, students, or patients.",
+    solution:
+      "Built a clean Next.js + TypeScript web app that fetches trial data from ClinicalTrials.gov API, displays key details, and uses OpenAI to generate contextual images for better understanding.",
+    tech: ["Next.js", "TypeScript", "OpenAI API", "ClinicalTrials.gov API"],
+    impact:
+      "Simplified access to trial info with visual aids; made complex data more approachable for non-technical users.",
+    hook: "Find and understand clinical trials faster—with visuals that make it clear.",
+    cta: "View Project →",
   },
 ];
 
@@ -301,6 +447,7 @@ const SkillsMarquee = () => (
   </div>
 );
 
+/** 
 const ProjectCard = ({ project }: { project: Project }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -381,6 +528,163 @@ const ProjectCard = ({ project }: { project: Project }) => {
       </div>
     </motion.div>
   );
+};*/
+
+const ProjectCard = ({ project }: { project: Project }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + project.images.length) % project.images.length,
+    );
+  };
+
+  const mainImage = project.images[currentImageIndex] || project.images[0];
+
+  return (
+    <motion.div
+      whileHover={{ y: -10 }}
+      className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all group flex flex-col h-full"
+    >
+      <div className="relative aspect-video overflow-hidden bg-gray-100">
+        {isLoading ? (
+          <Skeleton className="w-full h-full" />
+        ) : (
+          <>
+            <img
+              src={mainImage?.url}
+              alt={mainImage?.alt || project.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              referrerPolicy="no-referrer"
+            />
+
+            {/* Image Navigation */}
+            {project.images.length > 1 && (
+              <div className="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={prevImage}
+                  className="p-1.5 bg-white/90 rounded-full shadow-lg text-dark hover:bg-primary hover:text-white transition-all"
+                  aria-label="Previous image"
+                >
+                  <ChevronRight size={18} className="rotate-180" />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="p-1.5 bg-white/90 rounded-full shadow-lg text-dark hover:bg-primary hover:text-white transition-all"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            )}
+
+            {/* Image Indicators */}
+            {project.images.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-1.5">
+                {project.images.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all ${idx === currentImageIndex ? "w-4 bg-primary" : "w-1.5 bg-white/60"}`}
+                  />
+                ))}
+              </div>
+            )}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+              <div className="flex space-x-3">
+                {project.links.github && project.links.github !== "#" && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-colors"
+                  >
+                    <Github size={20} />
+                  </a>
+                )}
+                {project.links.live && project.links.live !== "#" && (
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-colors"
+                  >
+                    <ExternalLink size={20} />
+                  </a>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex items-center text-[10px] font-bold text-primary uppercase tracking-widest mb-2">
+          <ChevronRight size={12} className="mr-1" /> {project.timeline}
+        </div>
+        <h3 className="text-xl font-display font-bold mb-2">{project.title}</h3>
+
+        {project.hook && (
+          <p className="text-sm font-medium text-primary/80 italic mb-4">
+            "{project.hook}"
+          </p>
+        )}
+
+        <div className="space-y-4 text-sm mb-6">
+          <div>
+            <p className="font-bold text-dark mb-1">Problem:</p>
+            <p className="text-gray-600 leading-relaxed">{project.problem}</p>
+          </div>
+          {project.solution && (
+            <div>
+              <p className="font-bold text-dark mb-1">Solution:</p>
+              <p className="text-gray-600 leading-relaxed">
+                {project.solution}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto">
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="px-2.5 py-1 bg-accent text-primary text-[10px] font-bold rounded-md uppercase tracking-wider"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {project.links.live && (
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-sm font-bold text-primary hover:translate-x-1 transition-transform"
+            >
+              {project.cta || "View Project →"}
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 const Projects = () => (
@@ -394,7 +698,7 @@ const Projects = () => (
           </p>
         </div>
         <a
-          href="#"
+          href="https://github.com/Popthemy/portfolio-temilorun"
           className="mt-4 md:mt-0 text-primary font-bold flex items-center hover:underline"
         >
           View all on GitHub <ExternalLink size={18} className="ml-2" />
@@ -687,7 +991,7 @@ export default function App() {
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onClick={() => setIsModalOpen(true)}
-              className="group relative rounded-full bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-600 px-12 py-5 font-bold text-lg text-white shadow-xl hover:shadow-2xl hover:shadow-blue-500/50 transition-shadow"
+              className="group relative rounded-full bg-gradient-to-br from-blue-700 via-blue-600 to-primary-600 px-12 py-5 font-bold text-lg text-white shadow-xl hover:shadow-2xl hover:shadow-blue-500/50 transition-shadow"
             >
               {/* Gradient border glow */}
               <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/30 via-blue-300/20 to-blue-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
