@@ -1,31 +1,54 @@
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #007bff;
-  --color-accent: #e6f0ff;
-  --color-dark: #001f3f;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", var(--font-sans);
+@theme {
+  --color-primary: #007BFF;
+  --color-accent: #E6F0FF;
+  --color-dark: #001F3F;
+  
+  --font-sans: "Aeonik-Regular", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Aeonik-Medium", "Space Grotesk", var(--font-sans);
 }
 
 @layer base {
   body {
-    @apply bg-white text-dark font-sans;
+    @apply bg-white text-dark font-sans font-normal antialiased transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-slate-950 text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium;
   }
 }
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+  animation: scroll-left linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scroll-right linear infinite;
 }
 
 .animate-marquee {
-  animation: marquee 20s linear infinite;
+  animation: scroll-left 15s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: scroll-right 15s linear infinite;
 }
 
 .skeleton {
@@ -34,4 +57,13 @@
 
 .glass {
   @apply bg-white/80 backdrop-blur-md border border-white/20;
+}
+
+/* Custom Nav Styles */
+.nav-clip {
+  clip-path: path("M 166 0 c 9.4281 0 14.1421 0 17.0711 2.9289 a 10 10 0 0 1 0 0 c 2.9289 2.9289 2.9289 7.643 2.9289 17.0711 L 186 31 c 0 9.4281 0 14.1421 -2.9289 17.0711 a 10 10 0 0 1 0 0 c -2.9289 2.9289 -7.643 2.9289 -17.0711 2.9289 L 20 51 c -9.4281 0 -14.1421 0 -17.0711 -2.9289 a 10 10 0 0 1 0 0 c -2.9289 -2.9289 -2.9289 -7.643 -2.9289 -17.0711 L 0 20 c 0 -9.4281 0 -14.1421 2.9289 -17.0711 a 10 10 0 0 1 0 0 c 2.9289 -2.9289 7.643 -2.9289 17.0711 -2.9289 Z");
+}
+
+.nav-wrapper-clip {
+  clip-path: path("M 86 0 c 9.4281 0 14.1421 0 17.0711 2.9289 a 10 10 0 0 1 0 0 c 2.9289 2.9289 2.9289 7.643 2.9289 17.0711 L 106 28 c 0 9.4281 0 14.1421 -2.9289 17.0711 a 10 10 0 0 1 0 0 c -2.9289 2.9289 -7.643 2.9289 -17.0711 2.9289 L 20 48 c -9.4281 0 -14.1421 0 -17.0711 -2.9289 a 10 10 0 0 1 0 0 c -2.9289 -2.9289 -2.9289 -7.643 -2.9289 -17.0711 L 0 20 c 0 -9.4281 0 -14.1421 2.9289 -17.0711 a 10 10 0 0 1 0 0 c 2.9289 -2.9289 7.643 -2.9289 17.0711 -2.9289 Z");
 }
