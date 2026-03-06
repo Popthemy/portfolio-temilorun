@@ -41,38 +41,6 @@ export interface Project {
 // --- Data ---
 export const PROJECTS: Project[] = [
   {
-    id: "clinical-trial-viewer",
-    title: "Clinical Trial Viewer",
-    links: {
-      github: "https://github.com/Popthemy/clinic-trial-viewer",
-      live: "#",
-    },
-    images: [
-      {
-        url: "https://via.placeholder.com/800x600?text=Clinical+Trials+Dashboard",
-        alt: "Clinical Trial Viewer dashboard showing fetched trial list from ClinicalTrials.gov",
-        description:
-          "Main interface displaying trial title, status, location, and summary",
-      },
-      {
-        url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Image",
-        alt: "AI-generated visual representation of a clinical trial process",
-        description: "OpenAI-generated image enhancing trial understanding",
-      },
-    ],
-    timeline: "Modern Next.js + TypeScript viewer with AI visuals",
-    problem:
-      "Clinical trial information on ClinicalTrials.gov is scattered and hard to digest quickly for researchers, students, or patients.",
-    solution:
-      "Built a clean Next.js + TypeScript web app that fetches trial data from ClinicalTrials.gov API, displays key details, and uses OpenAI to generate contextual images for better understanding.",
-    tech: ["Next.js", "TypeScript", "OpenAI API", "ClinicalTrials.gov API"],
-    impact:
-      "Simplified access to trial info with visual aids; made complex data more approachable for non-technical users.",
-    hook: "Find and understand clinical trials faster—with visuals that make it clear.",
-    cta: "View Project →",
-  },
-
-  {
     id: "inbox-messaging-api",
     title: "InboxIT: Messaging API for Static Websites",
     links: {
@@ -81,10 +49,16 @@ export const PROJECTS: Project[] = [
     },
     images: [
       {
-        url: "https://via.placeholder.com/800x600?text=Inbox+API+Flow+Diagram",
-        alt: "Architecture diagram showing message flow from static site to inbox API with validation and routing",
+        url: "../images/inboxit-emaildelivered.png",
+        alt: "Message delivered to email from inbox API with validation and routing",
         description:
           "Flow enabling secure inquiry collection and routing without a traditional backend server",
+      },
+      {
+        url: "../images/inboxit-api-endpoint.png",
+        alt: "API endpoint interface for sending messages through the inbox API",
+        description:
+          "API endpoints for integrating the inbox messaging API into static websites",
       },
     ],
     timeline:
@@ -105,91 +79,6 @@ export const PROJECTS: Project[] = [
       "Enabled backend-like messaging for static sites; reduced bot submissions significantly and allowed direct replies to client email with one click.",
     hook: "Static site? Still collect and reply to messages securely.",
     cta: "View the Project →",
-  },
-
-  {
-    id: "ecommerce-backend-platform",
-    title: "E-Commerce Backend for Fashion Designers",
-    links: {
-      github: "https://github.com/Popthemy/ecommerce-backend",
-      live: "#",
-    },
-    images: [
-      {
-        url: "https://via.placeholder.com/800x600?text=E-Commerce+API+Endpoints",
-        alt: "Postman collection showing e-commerce API endpoints for products, cart, and orders",
-        description: "API documentation and testing in Postman",
-      },
-      {
-        url: "https://via.placeholder.com/600x400?text=E-Commerce+RBAC",
-        alt: "Role-Based Access Control dashboard for admin, seller, and buyer roles",
-        description: "RBAC interface demonstrating permission management",
-      },
-      {
-        url: "https://via.placeholder.com/600x400?text=Custom+Order+Form",
-        alt: "User order form with measurement inputs and designer style selection",
-        description: "Frontend-facing order flow for custom dress requests",
-      },
-    ],
-    timeline: "Full secure e-commerce backend with payments",
-    problem:
-      "Fashion designers needed a way for users to order custom-made clothes based on posted designs and personal measurements—standard e-commerce didn't support artisan workflows or measurement-based orders.",
-    solution:
-      "Built a backend platform where designers post styles, users browse and order custom pieces with their exact measurements, including product listing, cart, orders, RBAC, JWT/OTP auth, Cloudinary images, and Flutterwave payments.",
-    tech: [
-      "Django",
-      "Django REST Framework",
-      "PostgreSQL",
-      "Flutterwave",
-      "Cloudinary",
-      "JWT",
-      "OTP Auth",
-    ],
-    impact:
-      "Enabled artisans to sell custom designs directly; users get personalized fits without generic sizing issues; secure and scalable transaction handling.",
-    hook: "Designers post, customers order custom—measurements included.",
-    cta: "View Project →",
-  },
-
-  {
-    id: "cms-newsletter-platform",
-    title: "CMS & Automated Newsletter Platform",
-    links: {
-      github: "#",
-      live: "#",
-    },
-    images: [
-      {
-        url: "../images/cms-newsletter.png",
-        alt: "CMS API swagger docs interface showing newsletter creation with dispatch to subscriber",
-        description:
-          "API endpoints for newsletter creation and email distribution",
-      },
-      {
-        url: "../images/cms-blogs.png",
-        alt: "CMS API swagger docs interface showing blog endpoints and automated blog retrieval",
-        description:
-          "API endpoints for newsletter creation and email distribution",
-      },
-    ],
-    timeline:
-      "Manual publishing of blog and styling → automated, scalable content delivery",
-    problem:
-      "Sending newsletters manually took too much time, introduced errors, and didn't scale as audience grew.",
-    solution:
-      "Co-developed a lightweight CMS with content management, automated email distribution, automated blog delivery and standardized API responses.",
-    tech: [
-      "Django",
-      "Django REST Framework",
-      "PostgreSQL",
-      "Cloudinary",
-      "Postman",
-      "Vercel",
-    ],
-    impact:
-      "Cut manual publishing time by ~50%; shortened QA and feedback loops by ~30% through documented APIs and collaboration with QA engineers.",
-    hook: "Write once—deliver to thousands automatically.",
-    cta: "View the CMS →",
   },
 
   {
@@ -311,6 +200,121 @@ export const PROJECTS: Project[] = [
       "Automated estimates for homes, offices, and schools; enables faster, more accurate planning for solar/inverter investments without spreadsheets or guesswork.",
     hook: "Stop guessing your power needs calculate exactly what solar setup will keep the lights on.",
     cta: "Try it live →",
+  },
+  {
+    id: "clinical-trial-viewer",
+    title: "Clinical Trial Viewer",
+    links: {
+      github: "https://github.com/Popthemy/clinic-trial-viewer",
+      live: "#",
+    },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=Clinical+Trials+Dashboard",
+        alt: "Clinical Trial Viewer dashboard showing fetched trial list from ClinicalTrials.gov",
+        description:
+          "Main interface displaying trial title, status, location, and summary",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Image",
+        alt: "AI-generated visual representation of a clinical trial process",
+        description: "OpenAI-generated image enhancing trial understanding",
+      },
+    ],
+    timeline: "Modern Next.js + TypeScript viewer with AI visuals",
+    problem:
+      "Clinical trial information on ClinicalTrials.gov is scattered and hard to digest quickly for researchers, students, or patients.",
+    solution:
+      "Built a clean Next.js + TypeScript web app that fetches trial data from ClinicalTrials.gov API, displays key details, and uses OpenAI to generate contextual images for better understanding.",
+    tech: ["Next.js", "TypeScript", "OpenAI API", "ClinicalTrials.gov API"],
+    impact:
+      "Simplified access to trial info with visual aids; made complex data more approachable for non-technical users.",
+    hook: "Find and understand clinical trials faster—with visuals that make it clear.",
+    cta: "View Project →",
+  },
+  {
+    id: "ecommerce-backend-platform",
+    title: "E-Commerce Backend for Fashion Designers",
+    links: {
+      github: "https://github.com/Popthemy/ecommerce-backend",
+      live: "#",
+    },
+    images: [
+      {
+        url: "https://via.placeholder.com/800x600?text=E-Commerce+API+Endpoints",
+        alt: "Postman collection showing e-commerce API endpoints for products, cart, and orders",
+        description: "API documentation and testing in Postman",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=E-Commerce+RBAC",
+        alt: "Role-Based Access Control dashboard for admin, seller, and buyer roles",
+        description: "RBAC interface demonstrating permission management",
+      },
+      {
+        url: "https://via.placeholder.com/600x400?text=Custom+Order+Form",
+        alt: "User order form with measurement inputs and designer style selection",
+        description: "Frontend-facing order flow for custom dress requests",
+      },
+    ],
+    timeline: "Full secure e-commerce backend with payments",
+    problem:
+      "Fashion designers needed a way for users to order custom-made clothes based on posted designs and personal measurements—standard e-commerce didn't support artisan workflows or measurement-based orders.",
+    solution:
+      "Built a backend platform where designers post styles, users browse and order custom pieces with their exact measurements, including product listing, cart, orders, RBAC, JWT/OTP auth, Cloudinary images, and Flutterwave payments.",
+    tech: [
+      "Django",
+      "Django REST Framework",
+      "PostgreSQL",
+      "Flutterwave",
+      "Cloudinary",
+      "JWT",
+      "OTP Auth",
+    ],
+    impact:
+      "Enabled artisans to sell custom designs directly; users get personalized fits without generic sizing issues; secure and scalable transaction handling.",
+    hook: "Designers post, customers order custom—measurements included.",
+    cta: "View Project →",
+  },
+
+  {
+    id: "cms-newsletter-platform",
+    title: "CMS & Automated Newsletter Platform",
+    links: {
+      github: "#",
+      live: "#",
+    },
+    images: [
+      {
+        url: "../images/cms-newsletter.png",
+        alt: "CMS API swagger docs interface showing newsletter creation with dispatch to subscriber",
+        description:
+          "API endpoints for newsletter creation and email distribution",
+      },
+      {
+        url: "../images/cms-blogs.png",
+        alt: "CMS API swagger docs interface showing blog endpoints and automated blog retrieval",
+        description:
+          "API endpoints for newsletter creation and email distribution",
+      },
+    ],
+    timeline:
+      "Manual publishing of blog and styling → automated, scalable content delivery",
+    problem:
+      "Sending newsletters manually took too much time, introduced errors, and didn't scale as audience grew.",
+    solution:
+      "Co-developed a lightweight CMS with content management, automated email distribution, automated blog delivery and standardized API responses.",
+    tech: [
+      "Django",
+      "Django REST Framework",
+      "PostgreSQL",
+      "Cloudinary",
+      "Postman",
+      "Vercel",
+    ],
+    impact:
+      "Cut manual publishing time by ~50%; shortened QA and feedback loops by ~30% through documented APIs and collaboration with QA engineers.",
+    hook: "Write once—deliver to thousands automatically.",
+    cta: "View the CMS →",
   },
 ];
 
