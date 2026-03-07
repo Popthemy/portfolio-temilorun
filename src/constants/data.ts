@@ -210,10 +210,16 @@ export const PROJECTS: Project[] = [
     },
     images: [
       {
-        url: "https://via.placeholder.com/800x600?text=Clinical+Trials+Dashboard",
+        url: "../images/clinagent-home.png",
         alt: "Clinical Trial Viewer dashboard showing fetched trial list from ClinicalTrials.gov",
         description:
           "Main interface displaying trial title, status, location, and summary",
+      },
+      {
+        url: "../images/clinagent-home.png",
+        alt: "Clinical Trial Viewer homepage showing list of queries",
+        description:
+          "Main interface displaying example of queries",
       },
       {
         url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Image",

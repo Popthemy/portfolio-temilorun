@@ -111,7 +111,7 @@ export const Hero: React.FC = () => {
             variants={itemVariants}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-medium leading-[0.9] tracking-tighter flex flex-col items-center md:items-start"
           >
-            POPOOLA
+            POPOOLA:
             <span className="text-primary">
               <Typewriter texts={["Developer", "Architect", "Automator"]} />
             </span>
@@ -143,14 +143,14 @@ export const Hero: React.FC = () => {
             </MagneticButton>
             <div className="flex space-x-6 items-center">
               <a
-                href="#"
+                href="https://github.com/Popthemy"
                 aria-label="GitHub Profile"
                 className="text-gray-400 hover:text-primary transition-all hover:scale-110"
               >
                 <Github size={28} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/popoola-oluwatemilorun"
                 aria-label="LinkedIn Profile"
                 className="text-gray-400 hover:text-primary transition-all hover:scale-110"
               >

@@ -62,7 +62,7 @@ export const Mentorship: React.FC = () => {
                 <div className="bg-primary/20 p-4 rounded-2xl text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500"><Users size={32} /></div>
                 <div>
                   <h4 className="font-medium text-xl mb-2">Build with Oyo 2026</h4>
-                  <p className="text-gray-400 leading-relaxed">Facilitated frontend track—teaching controlled components, mocks, and validation to 50+ aspiring developers.</p>
+                  <p className="text-gray-400 leading-relaxed">Facilitated frontend track teaching controlled components, mocks, and validation to 50+ aspiring developers.</p>
                 </div>
               </motion.div>
               <motion.div 

@@ -4,7 +4,8 @@ import { Menu, X, Sun, Moon, Monitor, Home, Briefcase, Cpu, Users, Mail } from '
 import { NAV_ITEMS } from '../../constants/data';
 import { useTheme, Theme } from '../../context/ThemeContext';
 
-const LOGO_URL = "https://picsum.photos/seed/popoola-logo/400/120";
+// const LOGO_URL = "https://picsum.photos/seed/popoola-logo/400/120";
+const LOGO_URL = "../images/pop-logo.png";
 
 const IconMap: Record<string, React.ReactNode> = {
   Home: <Home size={16} />,

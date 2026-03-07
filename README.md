@@ -2,11 +2,11 @@
 
 **Full-Stack / Backend Software Engineer**  
 Ibadan, Oyo State, Nigeria  
-horluwatemilorunolamilekan@gmail.com | [LinkedIn](https://www.linkedin.com/in/popoola-oluwatemilorun) | [Twitter/X](https://twitter.com/yourhandle) | [Portfolio Website](https://your-portfolio-link.vercel.app)
+temilorunpopoola2677@gmail.com | [LinkedIn](https://www.linkedin.com/in/popoola-oluwatemilorun) | [Twitter/X](https://x.com/Themy046) | [Portfolio Website](https://portfolio-temilorun-59ew.vercel.app/) | [Github](https://github.com/Popthemy)
 
 Backend-focused full-stack developer with production experience building secure, scalable APIs and systems using **Python + Django**. Proven ability to own backend architecture, integrate third-party/AI services, deliver reliable features in remote/cross-functional teams, and make sound engineering tradeoffs that improve performance, security, and delivery speed.
 
-Currently expanding into React for end-to-end full-stack delivery while continuing to mentor and facilitate tech capacity-building in Oyo/Nigeria.
+Currently expanding into React for end-to-end full-stack delivery while continuing to mentor and facilitate tech capacity-building in Nigeria.
 
 ## Professional Experience
 
@@ -93,6 +93,6 @@ Git · GitHub · Docker · Postman · DrawSQL · Debugging & Profiling
 
 Open to remote/full-time backend/full-stack roles, freelance API/automation projects, or collaboration opportunities.
 
-Feel free to reach out: horluwatemilorunolamilekan@gmail.com
+Feel free to reach out: temilorunpopoola2677@gmail.com
 
 Last updated: February 2026
