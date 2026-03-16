@@ -42,48 +42,47 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "inbox-messaging-api",
-    title: "InboxIT: Messaging API for Static Websites",
+    title: "InboxIT – Messaging API for Static Websites",
     links: {
       github: "https://github.com/Popthemy/inbox-messaging-api",
-      live: "#",
+      live: "#", // add deployed demo if available
     },
     images: [
       {
         url: "../images/inboxit-emaildelivered.png",
-        alt: "Message delivered to email from inbox API with validation and routing",
+        alt: "Email received from static site submission showing validated message and clean routing",
         description:
-          "Flow enabling secure inquiry collection and routing without a traditional backend server",
+          "Real message delivered to inbox after passing honeypot + server-side validation",
       },
       {
         url: "../images/inboxit-api-endpoint.png",
-        alt: "API endpoint interface for sending messages through the inbox API",
+        alt: "API endpoint documentation showing POST /send-message with honeypot field",
         description:
-          "API endpoints for integrating the inbox messaging API into static websites",
+          "Integration-ready endpoint for static sites to securely collect inquiries",
       },
     ],
-    timeline:
-      "Manually sending email through apps now send api to email securely, API-driven inbox system",
+    timeline: "Manual copy-paste emails → secure, automated inbox API",
     problem:
-      "Static marketing or product pages had no safe, backend-free way to collect and route user messages, leading to spam, lost inquiries, and poor data quality.",
+      "Static landing pages and marketing sites had no safe way to collect user messages without a full backend—leading to spam, lost leads, and manual forwarding.",
     solution:
-      "Built a secure messaging API with server-side validation, honeypot protection, and routing logic—allowing static sites (e.g landing pages...) to receive, filter, and forward inquiries directly to multiple emails at once.",
+      "Built a lightweight messaging API that static sites can POST to; includes honeypot spam protection, server-side validation, and automatic routing to multiple email addresses with direct-reply support.",
     tech: [
       "Django",
       "Django REST Framework",
       "PostgreSQL",
       "JavaScript",
-      "HTM5",
+      "HTML5",
       "CSS",
     ],
     impact:
-      "Enabled backend-like messaging for static sites; reduced bot submissions significantly and allowed direct replies to client email with one click.",
-    hook: "Static site? Still collect and reply to messages securely.",
-    cta: "View the Project →",
+      "Enabled backend-like messaging on static sites; cut spam significantly and allowed one-click replies from client email—no extra tools needed.",
+    hook: "Your static site can still collect leads and reply instantly—securely.",
+    cta: "See how it works →",
   },
 
   {
-    id: "Event-profile-generator",
-    title: "Automated Event profile Generator",
+    id: "event-profile-generator",
+    title: "LinkedIn Local – Event Profile & Certificate Generator",
     links: {
       github: "https://github.com/Popthemy/linkedIn-dp-generator",
       live: "#",
@@ -91,61 +90,64 @@ export const PROJECTS: Project[] = [
     images: [
       {
         url: "../images/linkedinProfile-screen.png",
-        alt: "Portal for profile  and issuance.",
+        alt: "Event profile generator portal showing image upload and profile preview",
         description:
-          "Interface for uploading images and generating user profile",
+          "User interface for uploading photo and generating branded event profile",
       },
       {
         url: "../images/linkedin-local-lagos-certificate.png",
-        alt: "Portal for certificate and issuance.",
+        alt: "Sample generated certificate with participant name, event branding, and QR code",
         description:
-          "Interface for uploading images and generating user profile",
+          "Automated certificate output used for LinkedIn Local Lagos attendees",
       },
       {
         url: "../images/linkedin-local-lagos-dp.png",
-        alt: "Sample event profile with name, event details, and branding",
-        description: "Output profile ready for download",
+        alt: "Generated LinkedIn-style profile picture overlay with event branding",
+        description: "Custom event DP ready for social sharing and publicity",
       },
     ],
     timeline:
-      "Manual designing → secure, generation for individual user, same resolution",
+      "Manual Canva editing → automated, consistent profile & cert generation",
     problem:
-      "Manually creating and sending profile for events like LinkedIn Local Lagos was slow and hard to scale for large groups, limiting publicity and follow-up.",
+      "Manually designing event profile pictures and certificates for LinkedIn Local Lagos was slow, inconsistent, and hard to scale for hundreds of attendees—limiting post-event publicity.",
     solution:
-      "Built an profile generated system for and collaborated to build a certificate generator for bulk generation, QR verification, branding, and automated delivery—used to drive event visibility and engagement.",
-    tech: ["NEXTJS", "HTML", "JAVASCRIPT", "Tailwind"],
+      "Built a generator that lets users upload photos to create branded event profile overlays and certificates in seconds—complete with consistent sizing, QR verification, and bulk capability.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "JavaScript", "HTML"],
     impact:
-      "Automated issuance for 1,000+ participants instantly; improved event branding and post-event reach through verifiable digital certs.",
-    hook: "Generate and deliver profile and certificate for hundreds—automatically.",
-    cta: "View Project →",
+      "Automated creation for hundreds of participants; boosted event visibility through shareable profiles and certificates; saved hours of manual design work.",
+    hook: "One upload → branded profile and certificate ready for sharing.",
+    cta: "View the Generator →",
   },
 
   {
     id: "ecogather",
-    title: "EcoGather- Eco-Friendly event planner",
+    title: "EcoGather – QR-Based Eco-Friendly Event Planner",
     links: { github: "https://github.com/Popthemy/EcoGather", live: "#" },
     images: [
       {
         url: "../images/ecogather-homepage.png",
-        alt: "EcoGather event program dashboard showing schedule, timings, and sections",
-        description: "Main program view with timeline and section details",
+        alt: "EcoGather homepage showing digital event schedule and QR code access",
+        description: "Clean event program dashboard with timings and sections",
       },
       {
         url: "../images/ecogather-responsive-design.png",
-        alt: "Mobile view of EcoGather showing event schedule on phone",
-        description: "Responsive mobile layout for on-the-go planning",
+        alt: "Mobile view of EcoGather event schedule on smartphone",
+        description:
+          "Fully responsive layout for attendees to check program on the go",
       },
       {
         url: "../images/ecogather-test-cases.png",
-        alt: "Pytest test coverage report showing high coverage for EcoGather backend",
-        description: "Comprehensive test coverage ensuring reliability",
+        alt: "Pytest coverage report showing high test coverage for EcoGather backend",
+        description:
+          "Backend reliability ensured through comprehensive automated tests",
       },
     ],
-    timeline: "Static list → Interactive, sustainable event planner",
+    timeline:
+      "Printed paper programs → digital, sustainable QR-access platform",
     problem:
-      "Planning events like Sunday services or programs required printing large order-of-program sheets, increasing cost and paper waste. Attendees had no easy way to know exact timings or decide which sections to attend.",
+      "Events (Sunday services, seminars) relied on expensive printed programs—costly, wasteful, and hard to update. Attendees couldn’t easily plan which parts to attend.",
     solution:
-      "Created a platform where event organizers upload the program once, and attendees view the full schedule digitally reducing printing costs and enabling better personal planning.",
+      "Created a digital platform where organizers upload the schedule once; attendees scan a QR code to view the full program, timings, and sections on their phones—eliminating printing.",
     tech: [
       "Django",
       "Django REST Framework",
@@ -153,54 +155,56 @@ export const PROJECTS: Project[] = [
       "Pytest (test coverage)",
       "Bootstrap",
       "JavaScript",
-      "HTMl",
-      "Css",
+      "HTML",
+      "CSS",
     ],
     impact:
-      "Eliminated paper waste for events, lowered planning costs, and allowed attendees to know exact section timings. Used in real church/event contexts to improve sustainability and planning.",
-    hook: "Plan your event day without printing see the full program anytime.",
-    cta: "View Project →",
+      "Cut printing costs and paper waste for real church and seminar events; improved attendee planning and sustainability without losing convenience.",
+    hook: "One QR scan replaces stacks of paper—sustainable and always up-to-date.",
+    cta: "See the Platform →",
   },
 
   {
     id: "load-calculator",
-    title: "Load Calculator",
+    title: "Load Calculator – Solar & Inverter Planner",
     links: { github: "#", live: "https://load-calc.onrender.com/" },
     images: [
       {
         url: "../images/load-calculations-screen.png",
-        alt: "Full Load Calculator interface showing appliance inputs and solar/battery calculations",
+        alt: "Load Calculator showing appliance list and full solar/battery calculations",
         description:
-          "Main view with added appliances and real-time system results",
+          "Complete interface with inputs and real-time system sizing results",
       },
       {
         url: "../images/load-calculations-input.png",
-        alt: "Appliance addition form with power rating and usage hours",
-        description: "Interactive input section for adding household devices",
+        alt: "Appliance input form with wattage, hours, and add/remove controls",
+        description:
+          "Simple, focused form for entering household or office devices",
       },
       {
         url: "../images/load-calc-backup-screen.png",
-        alt: "Appliance backup form with day of autonomy and volt rating",
-        description: "Interactive input section for adding household devices",
+        alt: "Backup system calculator with autonomy days and voltage selection",
+        description: "Battery and inverter backup sizing section",
       },
       {
         url: "../images/load-calc-mobile-screen.png",
-        alt: "Mobile-responsive view of the Load Calculator tool",
-        description: "Responsive design on smaller screens",
+        alt: "Mobile view of Load Calculator displaying responsive layout",
+        description: "Fully usable on phones for on-site power audits",
       },
     ],
     timeline:
-      "Load calculator → Dynamic, interactive tool with validation & export",
+      "Manual spreadsheet math → dynamic, interactive solar planning tool",
     problem:
-      "Manual power load calculations for solar and inverter setups were time-consuming and error-prone, especially for homes, seminars, and small businesses in Nigeria planning off-grid solutions.",
+      "Estimating power load for solar/inverter setups in Nigeria was manual, error-prone, and slow—especially for homes, seminars, offices, and schools going off-grid.",
     solution:
-      "Built a lightweight, framework-free interactive tool that lets users add appliances, input power ratings and daily usage hours, then instantly calculates total load, daily energy, battery sizing, and solar panel requirements.",
+      "Built a framework-free tool: add appliances → input watts/hours → instantly get total load, daily energy, battery Ah needed, and solar panel sizing.",
     tech: ["Vanilla JavaScript", "HTML", "CSS", "Render"],
     impact:
-      "Automated estimates for homes, offices, and schools; enables faster, more accurate planning for solar/inverter investments without spreadsheets or guesswork.",
-    hook: "Stop guessing your power needs calculate exactly what solar setup will keep the lights on.",
-    cta: "Try it live →",
+      "Automated accurate planning for multiple seminars, homes, and small businesses; eliminated spreadsheets and guesswork for inverter/solar decisions.",
+    hook: "Know exactly what solar system you need—no more over- or under-buying.",
+    cta: "Calculate Your Load Live →",
   },
+
   {
     id: "clinical-trial-viewer",
     title: "Clinical Trial Viewer",
@@ -211,62 +215,61 @@ export const PROJECTS: Project[] = [
     images: [
       {
         url: "../images/clinagent-home.png",
-        alt: "Clinical Trial Viewer dashboard showing fetched trial list from ClinicalTrials.gov",
+        alt: "Clinical Trial Viewer homepage showing fetched trial list and search",
         description:
-          "Main interface displaying trial title, status, location, and summary",
+          "Clean dashboard displaying trial summaries from ClinicalTrials.gov",
       },
       {
         url: "../images/clinagent-home.png",
-        alt: "Clinical Trial Viewer homepage showing list of queries",
+        alt: "Example query results with trial title, status, location, and summary",
         description:
-          "Main interface displaying example of queries",
+          "Search results interface with essential trial information",
       },
       {
-        url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Image",
-        alt: "AI-generated visual representation of a clinical trial process",
-        description: "OpenAI-generated image enhancing trial understanding",
+        url: "https://via.placeholder.com/600x400?text=AI+Generated+Trial+Visual",
+        alt: "OpenAI-generated illustration explaining a clinical trial phase",
+        description:
+          "AI visual aid making complex trial data easier to understand",
       },
     ],
-    timeline: "Modern Next.js + TypeScript viewer with AI visuals",
+    timeline: "Manual browsing → fast, visual trial search + AI explanations",
     problem:
-      "Clinical trial information on ClinicalTrials.gov is scattered and hard to digest quickly for researchers, students, or patients.",
+      "ClinicalTrials.gov data is scattered and hard to read quickly—researchers, students, and patients waste time digging for key details.",
     solution:
-      "Built a clean Next.js + TypeScript web app that fetches trial data from ClinicalTrials.gov API, displays key details, and uses OpenAI to generate contextual images for better understanding.",
+      "Built a Next.js + TypeScript app that searches and displays trials cleanly, then uses OpenAI to generate simple visuals that explain trial phases and context.",
     tech: ["Next.js", "TypeScript", "OpenAI API", "ClinicalTrials.gov API"],
     impact:
-      "Simplified access to trial info with visual aids; made complex data more approachable for non-technical users.",
-    hook: "Find and understand clinical trials faster—with visuals that make it clear.",
-    cta: "View Project →",
+      "Made trial info faster to access and easier to understand—especially for non-experts—with visual summaries that reduce confusion.",
+    hook: "Find trials fast and actually understand what they mean.",
+    cta: "View the Tool →",
   },
+
   {
     id: "ecommerce-backend-platform",
-    title: "E-Commerce Backend for Fashion Designers",
+    title: "E-Commerce Backend for Custom Fashion Designers",
     links: {
       github: "https://github.com/Popthemy/ecommerce-backend",
       live: "#",
     },
     images: [
       {
-        url: "https://via.placeholder.com/800x600?text=E-Commerce+API+Endpoints",
-        alt: "Postman collection showing e-commerce API endpoints for products, cart, and orders",
-        description: "API documentation and testing in Postman",
+        url: "https://via.placeholder.com/800x600?text=E-Commerce+Admin+Dashboard",
+        alt: "Admin dashboard showing designer posts, custom orders, and measurements",
+        description:
+          "Backend view for managing custom clothing requests and payments",
       },
       {
-        url: "https://via.placeholder.com/600x400?text=E-Commerce+RBAC",
-        alt: "Role-Based Access Control dashboard for admin, seller, and buyer roles",
-        description: "RBAC interface demonstrating permission management",
-      },
-      {
-        url: "https://via.placeholder.com/600x400?text=Custom+Order+Form",
-        alt: "User order form with measurement inputs and designer style selection",
-        description: "Frontend-facing order flow for custom dress requests",
+        url: "https://via.placeholder.com/600x400?text=Custom+Measurement+Order",
+        alt: "User order form with designer style selection and personal measurements",
+        description:
+          "Frontend flow for customers to submit custom dress orders",
       },
     ],
-    timeline: "Full secure e-commerce backend with payments",
+    timeline: "Generic e-commerce → artisan-focused custom ordering system",
     problem:
-      "Fashion designers needed a way for users to order custom-made clothes based on posted designs and personal measurements—standard e-commerce didn't support artisan workflows or measurement-based orders.",
+      "Fashion designers had no easy way for customers to order custom-made clothes based on posted designs + personal body measurements—standard shops only sold ready-made items.",
     solution:
-      "Built a backend platform where designers post styles, users browse and order custom pieces with their exact measurements, including product listing, cart, orders, RBAC, JWT/OTP auth, Cloudinary images, and Flutterwave payments.",
+      "Built a backend where designers post styles, customers browse, select designs, input exact measurements, add to cart, pay via Flutterwave, with full RBAC, JWT/OTP auth, and Cloudinary image handling.",
     tech: [
       "Django",
       "Django REST Framework",
@@ -277,14 +280,14 @@ export const PROJECTS: Project[] = [
       "OTP Auth",
     ],
     impact:
-      "Enabled artisans to sell custom designs directly; users get personalized fits without generic sizing issues; secure and scalable transaction handling.",
-    hook: "Designers post, customers order custom—measurements included.",
-    cta: "View Project →",
+      "Allowed artisans to sell truly custom pieces; customers get perfect fits without guesswork; secure payments and role-based access kept everything organized.",
+    hook: "Post your design → customers order custom-made, measured to fit.",
+    cta: "Explore the Backend →",
   },
 
   {
     id: "cms-newsletter-platform",
-    title: "CMS & Automated Newsletter Platform",
+    title: "CMS + Automated Newsletter & Blog Platform",
     links: {
       github: "#",
       live: "#",
@@ -292,23 +295,21 @@ export const PROJECTS: Project[] = [
     images: [
       {
         url: "../images/cms-newsletter.png",
-        alt: "CMS API swagger docs interface showing newsletter creation with dispatch to subscriber",
+        alt: "Swagger docs showing newsletter creation and dispatch endpoints",
         description:
-          "API endpoints for newsletter creation and email distribution",
+          "API interface for creating and sending newsletters to subscribers",
       },
       {
         url: "../images/cms-blogs.png",
-        alt: "CMS API swagger docs interface showing blog endpoints and automated blog retrieval",
-        description:
-          "API endpoints for newsletter creation and email distribution",
+        alt: "API endpoints for blog post creation, retrieval, and automation",
+        description: "Backend documentation for automated blog publishing",
       },
     ],
-    timeline:
-      "Manual publishing of blog and styling → automated, scalable content delivery",
+    timeline: "Manual blog/newsletter publishing → fully automated delivery",
     problem:
-      "Sending newsletters manually took too much time, introduced errors, and didn't scale as audience grew.",
+      "Publishing blogs and newsletters manually was slow, repetitive, and didn't scale as the audience or content volume grew.",
     solution:
-      "Co-developed a lightweight CMS with content management, automated email distribution, automated blog delivery and standardized API responses.",
+      "Co-developed a CMS backend with content creation, automated email dispatch for newsletters, scheduled blog delivery, Cloudinary media, and clear API documentation for team use.",
     tech: [
       "Django",
       "Django REST Framework",
@@ -318,8 +319,8 @@ export const PROJECTS: Project[] = [
       "Vercel",
     ],
     impact:
-      "Cut manual publishing time by ~50%; shortened QA and feedback loops by ~30% through documented APIs and collaboration with QA engineers.",
-    hook: "Write once—deliver to thousands automatically.",
+      "Reduced publishing time by ~50%; shortened QA cycles by ~30% through standardized APIs and collaboration with testing team.",
+    hook: "Write once → blogs and newsletters go out automatically.",
     cta: "View the CMS →",
   },
 ];

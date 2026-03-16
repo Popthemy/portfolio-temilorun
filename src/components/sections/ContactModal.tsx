@@ -1,13 +1,33 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { motion, AnimatePresence, useSpring, useMotionValue, useTransform } from 'framer-motion';
-import { X, CheckCircle2, Send } from 'lucide-react';
+import React, { useState, useCallback, useEffect, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useSpring,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
+import { X, CheckCircle2, Send } from "lucide-react";
+import {z} from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2).max(100),
+  email: z.string().trim().email("Please enter a valid email address."),
+  message: z.string().trim().min(10).max(500),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+export const ContactModal: React.FC<ContactModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -23,28 +43,72 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     y.set(e.clientY - rect.top - rect.height / 2);
   };
 
-  const resetMouse = () => { x.set(0); y.set(0); };
+  const resetMouse = () => {
+    x.set(0);
+    y.set(0);
+  };
   // -----------------------------
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "http://localhost:4173/widget.min.js";
+    script.async = true;
+    // script.src = "https://messagejet.netlify.app/widget.min.js";
+    script.onload = () => console.log("Inboxit loaded");
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const inboxit = (window as any).inboxit;
+
+  const contactForm = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  const handleSubmit = useCallback(
+    (data: ContactFormData) => {
+    
+      // using script injection to send email via Inboxit widget, as it listens for form submissions with the specified ID and dataset attributes
+      if (typeof inboxit === "function") {
+        inboxit("init", {
+          apiKey: "LQh7X1BfbulHUhPAfrmH-5C9sMR2ML39PSx7mi0VxVw",
+          subject: `Portfolio: ${data.name || "New Lead"} reached out`,
+          successMessage:"Transmission Received! I'll get back to you shortly.",
+          errorMessage: "Transmission Failed! Please try again later.",
+        });
+        console.log("Form Data:", data);
+        inboxit("sendEmail", data);
+  
+      } else {
+        console.error("Inboxit widget not loaded yet");
+      }
+      setIsSubmitting(true);
+
       setTimeout(() => {
-        setIsSuccess(false);
-        onClose();
-      }, 2500);
-    }, 1500);
-  }, [onClose]);
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsSuccess(false);
+          onClose();
+        }, 2500);
+      }, 1500);
+    },
+    [onClose],
+  );
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
           {/* Overlay: Deep Dark Blur to make the 3D form pop */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -53,7 +117,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           />
 
           {/* Form Container: Glassmorphism Concept */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
             animate={{ opacity: 1, scale: 1, rotateX: 0 }}
             exit={{ opacity: 0, scale: 0.8, rotateY: -20 }}
@@ -62,47 +126,65 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
           >
             {/* Header: Kinetic styling with your font patterns */}
             <div className="p-8 md:p-10 pb-6 relative shrink-0 border-b border-white/10">
-              <button 
-                onClick={onClose} 
+              <button
+                onClick={onClose}
                 className="absolute top-8 right-8 p-2 rounded-full bg-white/5 hover:bg-white/20 transition-all hover:rotate-90"
               >
                 <X size={20} />
               </button>
-              <h3 className="text-4xl font-display font-medium tracking-tight">Let's Connect</h3>
-              <p className="mt-3 text-white/60 font-light text-lg">Turn your process into automated reality.</p>
+              <h3 className="text-4xl font-display font-medium tracking-tight">
+                Let's Connect
+              </h3>
+              <p className="mt-3 text-white/60 font-light text-lg">
+                Turn your process into automated reality.
+              </p>
             </div>
 
             <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar flex-grow">
               {isSuccess ? (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }} 
-                  animate={{ opacity: 1, y: 0 }} 
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                   className="py-16 text-center"
                 >
                   <div className="w-24 h-24 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/30 shadow-[0_0_30px_rgba(34,197,94,0.2)]">
                     <CheckCircle2 size={48} />
                   </div>
-                  <h4 className="text-2xl font-medium">Transmission Received</h4>
-                  <p className="text-white/50 mt-2">I'll get back to you shortly.</p>
+                  <h4 className="text-2xl font-medium">
+                    Transmission Received
+                  </h4>
+                  <p className="text-white/50 mt-2">
+                    I'll get back to you shortly.
+                  </p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form 
+                  id="email-contact-form"
+                  onSubmit={contactForm.handleSubmit(handleSubmit)}
+                  className="space-y-6"
+                >
                   {/* Floating Input Group */}
-                  {['Name', 'Email'].map((label) => (
+                  {["Name", "Email"].map((label) => (
                     <div key={label}>
-                      <label className="block text-[10px] font-bold text-white/40 mb-2 uppercase tracking-[0.2em]">{label}</label>
-                      <input 
-                        type={label === 'Email' ? 'email' : 'text'}
+                      <label className="block text-[10px] font-bold text-white/40 mb-2 uppercase tracking-[0.2em]">
+                        {label}
+                      </label>
+                      <input
+                        type={label === "Email" ? "email" : "text"}
+                        {...contactForm.register(label.toLowerCase() as "name" | "email")}
                         required
                         className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:bg-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-white/20"
                         placeholder={`Your ${label}...`}
                       />
                     </div>
                   ))}
-                  
+
                   <div>
-                    <label className="block text-[10px] font-bold text-white/40 mb-2 uppercase tracking-[0.2em]">Message</label>
-                    <textarea 
+                    <label className="block text-[10px] font-bold text-white/40 mb-2 uppercase tracking-[0.2em]">
+                      Message
+                    </label>
+                    <textarea
+                      {...contactForm.register("message")}
                       rows={3}
                       required
                       className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:bg-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all resize-none placeholder:text-white/20"
@@ -117,8 +199,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     style={{ x: mouseX, y: mouseY }}
                     className="relative group"
                   >
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       disabled={isSubmitting}
                       className="w-full bg-primary text-white py-5 rounded-2xl font-bold tracking-wide hover:shadow-[0_0_40px_rgba(var(--primary-rgb),0.4)] transition-all disabled:opacity-50 flex items-center justify-center overflow-hidden relative"
                     >
@@ -127,7 +209,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                       ) : (
                         <>
                           <span className="relative z-10">Send Message</span>
-                          <Send size={18} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          <Send
+                            size={18}
+                            className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                          />
                         </>
                       )}
                     </button>

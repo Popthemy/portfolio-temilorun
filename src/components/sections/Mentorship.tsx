@@ -65,7 +65,7 @@ export const Mentorship: React.FC = () => {
                   <p className="text-gray-400 leading-relaxed">Facilitated frontend track teaching controlled components, mocks, and validation to 50+ aspiring developers.</p>
                 </div>
               </motion.div>
-              <motion.div 
+              <motion.div     
                 variants={{
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0 }
