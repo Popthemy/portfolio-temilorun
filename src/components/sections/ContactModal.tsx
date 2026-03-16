@@ -11,6 +11,9 @@ import {z} from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+const APIKEY = import.meta.env.VITE_INBOXIT_API_KEY;
+const WIDGET_URL = import.meta.env.VITE_INBOXIT_WIDGET_URL
+
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(100),
   email: z.string().trim().email("Please enter a valid email address."),
@@ -51,9 +54,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "http://localhost:4173/widget.min.js";
+    script.src = WIDGET_URL;
     script.async = true;
-    // script.src = "https://messagejet.netlify.app/widget.min.js";
     script.onload = () => console.log("Inboxit loaded");
     document.body.appendChild(script);
     return () => {
@@ -78,7 +80,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       // using script injection to send email via Inboxit widget, as it listens for form submissions with the specified ID and dataset attributes
       if (typeof inboxit === "function") {
         inboxit("init", {
-          apiKey: "LQh7X1BfbulHUhPAfrmH-5C9sMR2ML39PSx7mi0VxVw",
+          apiKey: APIKEY,
           subject: `Portfolio: ${data.name || "New Lead"} reached out`,
           successMessage:"Transmission Received! I'll get back to you shortly.",
           errorMessage: "Transmission Failed! Please try again later.",
