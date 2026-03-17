@@ -127,7 +127,7 @@ export const Hero: React.FC = () => {
             variants={itemVariants}
             className="mt-4 text-base md:text-lg font-medium text-dark dark:text-gray-200"
           >
-            Efficiency matters. I deliver solutions that work—end to end.
+            Efficiency matters. I deliver solutions that work end to end.
           </motion.p>
           <motion.div
             variants={itemVariants}
