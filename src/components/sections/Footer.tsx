@@ -71,17 +71,10 @@ export const Footer: React.FC<FooterProps> = ({ onContactClick }) => {
         </div>
         <div className="mt-20 pt-10 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 font-medium">
           <p>
-            © {new Date().getFullYear()} Popoola. Built with precision and AI
+            © {new Date().getFullYear()} Popoola.
             acceleration.
           </p>
-          <div className="flex space-x-8 mt-6 md:mt-0">
-            <a href="#" className="hover:text-primary transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Terms of Service
-            </a>
-          </div>
+
         </div>
       </div>
     </footer>
