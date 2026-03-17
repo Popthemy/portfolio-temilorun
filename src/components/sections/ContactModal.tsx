@@ -7,17 +7,18 @@ import {
   useTransform,
 } from "framer-motion";
 import { X, CheckCircle2, Send } from "lucide-react";
-import {z} from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const APIKEY = import.meta.env.VITE_INBOXIT_API_KEY;
-const WIDGET_URL = import.meta.env.VITE_INBOXIT_WIDGET_URL
+const WIDGET_URL = import.meta.env.VITE_WIDGET_URL;
+console.log("Widget URL:", WIDGET_URL);
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2).max(100),
+  name: z.string().trim().min(2, "Name must be at least 2 characters"),
   email: z.string().trim().email("Please enter a valid email address."),
-  message: z.string().trim().min(10).max(500),
+  message: z.string().trim().min(10, "Message must be at least 10 characters"),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -33,6 +34,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const contactForm = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  const {register,reset,handleSubmit,formState:{errors}} = contactForm
 
   // --- MAGNETIC BUTTON LOGIC ---
   const x = useMotionValue(0);
@@ -53,6 +64,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   // -----------------------------
 
   useEffect(() => {
+    if (window.inboxit) return;
     const script = document.createElement("script");
     script.src = WIDGET_URL;
     script.async = true;
@@ -63,44 +75,34 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     };
   }, []);
 
-  const inboxit = (window as any).inboxit;
 
-  const contactForm = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  });
-
-  const handleSubmit = useCallback(
-    (data: ContactFormData) => {
-    
+  const onHandleSubmit = useCallback(
+    async (data: ContactFormData) => {
+      const inboxit = (window as any).inboxit;
+      
       // using script injection to send email via Inboxit widget, as it listens for form submissions with the specified ID and dataset attributes
-      if (typeof inboxit === "function") {
-        inboxit("init", {
-          apiKey: APIKEY,
-          subject: `Portfolio: ${data.name || "New Lead"} reached out`,
-          successMessage:"Transmission Received! I'll get back to you shortly.",
-          errorMessage: "Transmission Failed! Please try again later.",
-        });
-        console.log("Form Data:", data);
-        inboxit("sendEmail", data);
-  
-      } else {
+      if (typeof inboxit !== "function") {
         console.error("Inboxit widget not loaded yet");
       }
       setIsSubmitting(true);
-
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSuccess(true);
+      try {
+        inboxit("init", {
+          apiKey: APIKEY,
+          subject: `Portfolio: ${data.name || "New Lead"} reached out`,
+          successMessage:
+            "Transmission Received! I'll get back to you shortly.",
+          errorMessage: "Transmission Failed! Please try again later.",
+        });
+        await inboxit("sendEmail", data);
         setTimeout(() => {
           setIsSuccess(false);
           onClose();
-        }, 2500);
-      }, 1500);
+        }, 1500);
+        reset()
+      } catch (err) {
+      } finally {
+        setIsSubmitting(false);
+      }
     },
     [onClose],
   );
@@ -160,9 +162,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   </p>
                 </motion.div>
               ) : (
-                <form 
+                <form
                   id="email-contact-form"
-                  onSubmit={contactForm.handleSubmit(handleSubmit)}
+                  onSubmit={handleSubmit(onHandleSubmit)}
                   className="space-y-6"
                 >
                   {/* Floating Input Group */}
@@ -173,11 +175,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                       </label>
                       <input
                         type={label === "Email" ? "email" : "text"}
-                        {...contactForm.register(label.toLowerCase() as "name" | "email")}
+                        {...register(label.toLowerCase() as "name" | "email")}
                         required
                         className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:bg-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-white/20"
                         placeholder={`Your ${label}...`}
                       />
+                      {errors[label.toLowerCase()] && (
+                        <p className="text-red-400 text-xs mt-1">
+                          {errors[label.toLowerCase()].message}
+                        </p>
+                      )}
                     </div>
                   ))}
 
@@ -186,12 +193,17 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                       Message
                     </label>
                     <textarea
-                      {...contactForm.register("message")}
+                      {...register("message")}
                       rows={3}
                       required
                       className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:bg-white/10 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all resize-none placeholder:text-white/20"
                       placeholder="What's on your mind?"
                     ></textarea>
+                    {errors.message && (
+                      <p className="text-red-400 text-xs mt-1">
+                        {errors.message.message}
+                      </p>
+                    )}
                   </div>
 
                   {/* Concept: Magnetic Primary Button */}
