@@ -110,10 +110,10 @@ export const Projects: React.FC = () => {
             </p>
           </div>
           <a
-            href="#"
+            href="https://github.com/Popthemy/"
             className="mt-6 md:mt-0 text-primary font-bold flex items-center group"
           >
-            View all on GitHub{" "}
+            View all on GitHub
             <ExternalLink
               size={20}
               className="ml-2 group-hover:rotate-45 transition-transform"
