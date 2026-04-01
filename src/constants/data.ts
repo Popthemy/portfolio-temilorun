@@ -45,7 +45,7 @@ export const PROJECTS: Project[] = [
     title: "InboxIT – Messaging API for Static Websites",
     links: {
       github: "https://github.com/Popthemy/inbox-messaging-api",
-      live: "#", // add deployed demo if available
+      live: "https://inboxit-frontend.vercel.app/", // add deployed demo if available
     },
     images: [
       {
@@ -71,6 +71,7 @@ export const PROJECTS: Project[] = [
       "Django REST Framework",
       "PostgreSQL",
       "JavaScript",
+      "React",
       "HTML5",
       "CSS",
     ],
@@ -122,7 +123,7 @@ export const PROJECTS: Project[] = [
   {
     id: "ecogather",
     title: "EcoGather – QR-Based Eco-Friendly Event Planner",
-    links: { github: "https://github.com/Popthemy/EcoGather", live: "#" },
+    links: { github: "https://github.com/Popthemy/EcoGather", live: "https://eco-gather.vercel.app/" },
     images: [
       {
         url: "../images/ecogather-homepage.png",
