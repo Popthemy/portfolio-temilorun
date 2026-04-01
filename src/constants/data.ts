@@ -80,50 +80,13 @@ export const PROJECTS: Project[] = [
     hook: "Your static site can still collect leads and reply instantly—securely.",
     cta: "See how it works →",
   },
-
-  {
-    id: "event-profile-generator",
-    title: "LinkedIn Local – Event Profile & Certificate Generator",
-    links: {
-      github: "https://github.com/Popthemy/linkedIn-dp-generator",
-      live: "#",
-    },
-    images: [
-      {
-        url: "../images/linkedinProfile-screen.png",
-        alt: "Event profile generator portal showing image upload and profile preview",
-        description:
-          "User interface for uploading photo and generating branded event profile",
-      },
-      {
-        url: "../images/linkedin-local-lagos-certificate.png",
-        alt: "Sample generated certificate with participant name, event branding, and QR code",
-        description:
-          "Automated certificate output used for LinkedIn Local Lagos attendees",
-      },
-      {
-        url: "../images/linkedin-local-lagos-dp.png",
-        alt: "Generated LinkedIn-style profile picture overlay with event branding",
-        description: "Custom event DP ready for social sharing and publicity",
-      },
-    ],
-    timeline:
-      "Manual Canva editing → automated, consistent profile & cert generation",
-    problem:
-      "Manually designing event profile pictures and certificates for LinkedIn Local Lagos was slow, inconsistent, and hard to scale for hundreds of attendees—limiting post-event publicity.",
-    solution:
-      "Built a generator that lets users upload photos to create branded event profile overlays and certificates in seconds—complete with consistent sizing, QR verification, and bulk capability.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "JavaScript", "HTML"],
-    impact:
-      "Automated creation for hundreds of participants; boosted event visibility through shareable profiles and certificates; saved hours of manual design work.",
-    hook: "One upload → branded profile and certificate ready for sharing.",
-    cta: "View the Generator →",
-  },
-
   {
     id: "ecogather",
     title: "EcoGather – QR-Based Eco-Friendly Event Planner",
-    links: { github: "https://github.com/Popthemy/EcoGather", live: "https://eco-gather.vercel.app/" },
+    links: {
+      github: "https://github.com/Popthemy/EcoGather",
+      live: "https://eco-gather.vercel.app/",
+    },
     images: [
       {
         url: "../images/ecogather-homepage.png",
@@ -163,6 +126,45 @@ export const PROJECTS: Project[] = [
       "Cut printing costs and paper waste for real church and seminar events; improved attendee planning and sustainability without losing convenience.",
     hook: "One QR scan replaces stacks of paper—sustainable and always up-to-date.",
     cta: "See the Platform →",
+  },
+
+  {
+    id: "event-profile-generator",
+    title: "LinkedIn Local – Event Profile & Certificate Generator",
+    links: {
+      github: "https://github.com/Popthemy/linkedIn-dp-generator",
+      live: "#",
+    },
+    images: [
+      {
+        url: "../images/linkedinProfile-screen.png",
+        alt: "Event profile generator portal showing image upload and profile preview",
+        description:
+          "User interface for uploading photo and generating branded event profile",
+      },
+      {
+        url: "../images/linkedin-local-lagos-certificate.png",
+        alt: "Sample generated certificate with participant name, event branding, and QR code",
+        description:
+          "Automated certificate output used for LinkedIn Local Lagos attendees",
+      },
+      {
+        url: "../images/linkedin-local-lagos-dp.png",
+        alt: "Generated LinkedIn-style profile picture overlay with event branding",
+        description: "Custom event DP ready for social sharing and publicity",
+      },
+    ],
+    timeline:
+      "Manual Canva editing → automated, consistent profile & cert generation",
+    problem:
+      "Manually designing event profile pictures and certificates for LinkedIn Local Lagos was slow, inconsistent, and hard to scale for hundreds of attendees—limiting post-event publicity.",
+    solution:
+      "Built a generator that lets users upload photos to create branded event profile overlays and certificates in seconds—complete with consistent sizing, QR verification, and bulk capability.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "JavaScript", "HTML"],
+    impact:
+      "Automated creation for hundreds of participants; boosted event visibility through shareable profiles and certificates; saved hours of manual design work.",
+    hook: "One upload → branded profile and certificate ready for sharing.",
+    cta: "View the Generator →",
   },
 
   {
