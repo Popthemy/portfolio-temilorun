@@ -1,0 +1,24 @@
+# Popoola Temilorun - Backend Software Engineer
+
+## About
+Backend-focused software engineer based in Nigeria, building reliable backend systems and APIs with Python and Django. Experienced in database-driven applications, payment integrations, webhook handling, and React for end-to-end product development.
+
+## Core Skills
+- Backend: Python, Django, Django REST Framework, REST API Development
+- Databases: PostgreSQL, MySQL, SQLite, PostGIS, Database Design
+- Integrations: Payment Processing, Webhooks, OpenAI API, Cloudinary, Email
+- Frontend: JavaScript, React, TypeScript, Next.js
+- Tools: Celery, Redis, Docker, Git, Postman
+
+## Best Pages & Projects
+- Homepage: https://portfolio-temilorun-59ew.vercel.app/
+- SendIT (Logistics Marketplace): https://senditt.com.ng/
+- Inboxit (Form Backend Service): https://inboxit-frontend.vercel.app/
+- EcoGather (Digital Event Programme): https://eco-gather.vercel.app/
+- Load Calculator: https://load-calc.onrender.com/
+
+## Contact
+- Email: temilorunpopoola2677@gmail.com
+- GitHub: https://github.com/Popthemy
+- LinkedIn: https://www.linkedin.com/in/popoola-oluwatemilorun
+- Twitter/X: https://x.com/Themy046
