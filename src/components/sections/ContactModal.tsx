@@ -5,7 +5,7 @@ import {
   useSpring,
   useMotionValue,
   useTransform,
-} from "framer-motion";
+} from "motion/react";
 import { X, CheckCircle2, Send } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const APIKEY = import.meta.env.VITE_INBOXIT_API_KEY;
 const WIDGET_URL = import.meta.env.VITE_WIDGET_URL;
-console.log("Widget URL:", WIDGET_URL);
+// console.log("Widget URL:", WIDGET_URL);
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters"),
@@ -22,6 +22,14 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
+
+const createEmailFallback = (data: ContactFormData) => ({
+  message: "Messaging quota reached. Kindly use the email directly.",
+  emailHref: `mailto:temilorunpopoola2677@gmail.com?${new URLSearchParams({
+    subject: `Portfolio: ${data.name} reached out`,
+    body: `Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`,
+  }).toString()}`,
+});
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -34,6 +42,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [toast, setToast] = useState<ReturnType<typeof createEmailFallback> | null>(null);
   const contactForm = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -64,16 +73,24 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   // -----------------------------
 
   useEffect(() => {
-    if (window.inboxit) return;
+    if (!WIDGET_URL || (window as any).inboxit) return;
     const script = document.createElement("script");
     script.src = WIDGET_URL;
     script.async = true;
     script.onload = () => console.log("Inboxit loaded");
     document.body.appendChild(script);
     return () => {
-      document.body.removeChild(script);
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timeout = window.setTimeout(() => setToast(null), 6000);
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
 
 
   const onHandleSubmit = useCallback(
@@ -83,6 +100,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       // using script injection to send email via Inboxit widget, as it listens for form submissions with the specified ID and dataset attributes
       if (typeof inboxit !== "function") {
         console.error("Inboxit widget not loaded yet");
+        setToast(createEmailFallback(data));
+        return;
       }
       setIsSubmitting(true);
       try {
@@ -100,6 +119,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         }, 1500);
         reset()
       } catch (err) {
+        console.error("Inboxit could not send the contact message", err);
+        setToast(createEmailFallback(data));
       } finally {
         setIsSubmitting(false);
       }
@@ -111,6 +132,20 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+          {toast && (
+            <div
+              role="alert"
+              className="fixed top-5 right-5 z-[120] max-w-sm rounded-2xl border border-white/20 bg-slate-950 px-5 py-4 text-sm text-white shadow-2xl"
+            >
+              <p>{toast.message}</p>
+              <a
+                href={toast.emailHref}
+                className="mt-2 inline-block font-semibold text-primary underline underline-offset-2"
+              >
+                Email me directly
+              </a>
+            </div>
+          )}
           {/* Overlay: Deep Dark Blur to make the 3D form pop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -231,6 +266,18 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                       )}
                     </button>
                   </motion.div>
+
+                  <p className="text-center text-xs text-white/50 pt-1">
+                    Contact form powered by{' '}
+                    <a
+                      href="https://inboxit-frontend.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-medium"
+                    >
+                      Inboxit
+                    </a>
+                  </p>
                 </form>
               )}
             </div>

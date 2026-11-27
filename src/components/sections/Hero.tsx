@@ -60,7 +60,7 @@ export const Hero: React.FC = () => {
       id="home"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-24 md:pt-28 pb-14 md:pb-20 overflow-hidden"
     >
       {/* Interactive Background */}
       <div className="absolute inset-0 -z-10">
@@ -82,7 +82,7 @@ export const Hero: React.FC = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -92,50 +92,52 @@ export const Hero: React.FC = () => {
         >
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-6"
+            className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4 md:mb-6"
           >
-            <div className="px-4 py-1.5 bg-accent rounded-full text-primary text-[10px] md:text-xs font-bold uppercase tracking-widest">
-              Full-Stack Engineer
+            <div className="px-4 py-1.5 bg-accent dark:bg-primary/15 rounded-full text-primary text-[10px] md:text-xs font-bold uppercase tracking-widest">
+              Software Engineer
             </div>
-            <div className="md:hidden flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full border border-green-100">
+            <div className="md:hidden flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-950/60 rounded-full border border-green-100 dark:border-green-800/40">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              <span className="text-[10px] font-bold text-green-700 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">
                 Available for work
               </span>
             </div>
           </motion.div>
           <motion.h1
             variants={itemVariants}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-medium leading-[0.9] tracking-tighter flex flex-col items-center md:items-start"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-medium leading-[0.95] tracking-tighter flex flex-col items-center md:items-start"
           >
             POPOOLA:
             <span className="text-primary">
-              <Typewriter texts={["Developer", "Architect", "Automator"]} />
+              <Typewriter
+                texts={["Backend Engineer", "API Developer", "Python Developer"]}
+              />
             </span>
           </motion.h1>
           <motion.p
             variants={itemVariants}
-            className="mt-8 text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed"
+            className="mt-5 md:mt-8 text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed"
           >
-            Building secure automation from Ibadan, Nigeria. Reliable code that
-            scales and saves time.
+            I build reliable backend systems and APIs with Python and Django and
+            use React to bring those systems into usable, end-to-end products.
           </motion.p>
           <motion.p
             variants={itemVariants}
-            className="mt-4 text-base md:text-lg font-medium text-dark dark:text-gray-200"
+            className="mt-3 md:mt-4 text-sm sm:text-base md:text-lg font-medium text-dark dark:text-gray-200"
           >
-            Efficiency matters. I deliver solutions that work end to end.
+            Backend-first. Product-minded. Comfortable working across the stack.
           </motion.p>
           <motion.div
             variants={itemVariants}
-            className="mt-10 md:mt-12 flex flex-col sm:flex-row gap-6 items-center justify-center md:justify-start"
+            className="mt-7 md:mt-10 flex flex-col sm:flex-row gap-5 items-center justify-center md:justify-start"
           >
             <MagneticButton
               href="#projects"
-              className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all flex items-center justify-center group relative overflow-hidden"
+              className="w-full sm:w-auto bg-primary text-white px-10 py-4 md:py-5 rounded-full font-bold hover:shadow-2xl hover:shadow-primary/40 transition-all flex items-center justify-center group relative overflow-hidden"
             >
               <span className="relative z-10">View My Work</span>
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform relative z-10" />
@@ -144,6 +146,8 @@ export const Hero: React.FC = () => {
             <div className="flex space-x-6 items-center">
               <a
                 href="https://github.com/Popthemy"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="GitHub Profile"
                 className="text-gray-400 hover:text-primary transition-all hover:scale-110"
               >
@@ -151,6 +155,8 @@ export const Hero: React.FC = () => {
               </a>
               <a
                 href="https://www.linkedin.com/in/popoola-oluwatemilorun"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
                 className="text-gray-400 hover:text-primary transition-all hover:scale-110"
               >
@@ -168,9 +174,9 @@ export const Hero: React.FC = () => {
           className="order-1 md:order-2 relative"
         >
           {isLoading ? (
-            <Skeleton className="aspect-square rounded-[2rem] w-full max-w-md mx-auto" />
+            <Skeleton className="aspect-square rounded-[2rem] w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto" />
           ) : (
-            <div className="relative w-full max-w-sm lg:max-w-md mx-auto group">
+            <div className="relative w-full max-w-[220px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto group">
               <motion.div
                 animate={{
                   rotate: [0, 5, -5, 0],
@@ -181,7 +187,7 @@ export const Hero: React.FC = () => {
                   duration: 10,
                   ease: "easeInOut",
                 }}
-                className="absolute -inset-6 bg-accent rounded-[2.5rem] -rotate-6 -z-10 group-hover:rotate-0 transition-transform duration-700"
+                className="absolute -inset-4 md:-inset-6 bg-accent dark:bg-primary/10 rounded-[2.5rem] -rotate-6 -z-10 group-hover:rotate-0 transition-transform duration-700"
               />
               <motion.div
                 animate={{
@@ -197,7 +203,7 @@ export const Hero: React.FC = () => {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", bounce: 0.5, duration: 1.2 }}
-                  src="../images/themy-profile.jpg"
+                  src="/images/themy-profile.jpg"
                   alt="Popoola Professional Headshot"
                   className="rounded-[2rem] shadow-2xl w-full object-cover aspect-square grayscale hover:grayscale-0 transition-all duration-700"
                   referrerPolicy="no-referrer"

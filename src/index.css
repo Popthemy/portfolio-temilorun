@@ -51,6 +51,15 @@
   animation: scroll-right 15s linear infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-left,
+  .animate-scroll-right,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation-play-state: paused;
+  }
+}
+
 .skeleton {
   @apply bg-gray-200 animate-pulse rounded;
 }

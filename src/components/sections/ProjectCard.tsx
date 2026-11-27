@@ -1,224 +1,308 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Github, ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Github,
+  ExternalLink,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Layers,
+} from 'lucide-react';
 import { Project } from '../../constants/data';
 import { Skeleton } from '../common/Skeleton';
 
 interface ProjectCardProps {
   project: Project;
   index: number;
+  onOpenCaseStudy: (slug: string) => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, index }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+export const ProjectCard: React.FC<ProjectCardProps> = React.memo(
+  ({ project, onOpenCaseStudy }) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [direction, setDirection] = useState(0);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
+    useEffect(() => {
+      const timer = setTimeout(() => setIsLoading(false), 350);
+      return () => clearTimeout(timer);
+    }, []);
 
-  const nextImage = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDirection(1);
-    setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
-  }, [project.images.length]);
+    const nextImage = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (project.images.length <= 1) return;
+        setDirection(1);
+        setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
+      },
+      [project.images.length]
+    );
 
-  const prevImage = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setDirection(-1);
-    setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
-  }, [project.images.length]);
+    const prevImage = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (project.images.length <= 1) return;
+        setDirection(-1);
+        setCurrentImageIndex(
+          (prev) => (prev - 1 + project.images.length) % project.images.length
+        );
+      },
+      [project.images.length]
+    );
 
-  const currentImage = project.images[currentImageIndex];
+    const currentImage = project.images[currentImageIndex];
+    const hasImages = project.images.length > 0;
+    const architectureSteps = project.caseStudy.architecture?.steps || [];
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.9
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      scale: 1
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.9
-    })
-  };
+    const variants = {
+      enter: (dir: number) => ({
+        x: dir > 0 ? 300 : -300,
+        opacity: 0,
+        scale: 0.94,
+      }),
+      center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1,
+        scale: 1,
+      },
+      exit: (dir: number) => ({
+        zIndex: 0,
+        x: dir < 0 ? 300 : -300,
+        opacity: 0,
+        scale: 0.94,
+      }),
+    };
 
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/5 shadow-2xl shadow-dark/5 hover:shadow-primary/10 hover:border-primary/20 transition-all group flex flex-col h-full relative">
-      <div className="relative aspect-video md:aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-slate-800 group/slideshow">
-        {isLoading ? (
-          <Skeleton className="w-full h-full" />
-        ) : (
-          <div className="relative w-full h-full">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.img
-                key={currentImageIndex}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                }}
-                src={currentImage?.url}
-                alt={currentImage?.alt || project.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </AnimatePresence>
+    const handleCaseStudyClick = (e: React.MouseEvent) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      onOpenCaseStudy(project.slug);
+    };
 
-            {project.images.length > 1 && (
-              <>
-                <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover/slideshow:opacity-100 transition-opacity z-10">
-                  <button
-                    onClick={prevImage}
-                    className="p-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full text-dark dark:text-white hover:bg-primary hover:text-white transition-all shadow-lg"
-                    aria-label="Previous image"
+    return (
+      <div className="bg-white dark:bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/5 shadow-2xl shadow-dark/5 hover:shadow-primary/10 hover:border-primary/20 transition-all group flex flex-col h-full relative">
+        {/* Visual Header: Screenshot slideshow or clean backend architecture preview */}
+        <div className="relative aspect-video md:aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-slate-800 group/slideshow">
+          {isLoading && hasImages ? (
+            <Skeleton className="w-full h-full" />
+          ) : hasImages ? (
+            <div className="relative w-full h-full">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.img
+                  key={currentImageIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: 'spring', stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                  }}
+                  src={currentImage?.url}
+                  alt={currentImage?.alt || project.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </AnimatePresence>
+
+              {project.images.length > 1 && (
+                <>
+                  <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover/slideshow:opacity-100 transition-opacity z-10">
+                    <button
+                      type="button"
+                      onClick={prevImage}
+                      className="p-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full text-dark dark:text-white hover:bg-primary hover:text-white transition-all shadow-lg"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextImage}
+                      className="p-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full text-dark dark:text-white hover:bg-primary hover:text-white transition-all shadow-lg"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 z-10">
+                    {project.images.map((_, idx) => (
+                      <div
+                        key={idx}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          idx === currentImageIndex
+                            ? 'bg-primary w-4'
+                            : 'bg-white/60 w-1.5'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="w-full h-full p-5 md:p-7 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-dark to-slate-900 text-white">
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">
+                  <Layers size={13} />
+                  System Flow
+                </span>
+                <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/10 text-gray-200 border border-white/10">
+                  Backend Architecture
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5 my-auto pt-2">
+                {architectureSteps.slice(0, 4).map((step, stepIdx) => (
+                  <div
+                    key={step.label}
+                    className="rounded-xl bg-white/5 border border-white/10 p-2.5 md:p-3"
                   >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="p-2 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-full text-dark dark:text-white hover:bg-primary hover:text-white transition-all shadow-lg"
-                    aria-label="Next image"
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-primary mb-0.5">
+                      0{stepIdx + 1}
+                    </p>
+                    <p className="text-xs font-semibold text-white leading-tight line-clamp-1">
+                      {step.label}
+                    </p>
+                    {step.detail && (
+                      <p className="text-[10px] text-gray-400 leading-snug mt-0.5 line-clamp-1 hidden sm:block">
+                        {step.detail}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {(project.links.github || project.links.live) && (
+            <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 md:p-8 z-20 pointer-events-none group-hover:pointer-events-auto">
+              <div className="flex space-x-3">
+                {project.links.github && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2.5 md:p-3 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-all hover:scale-105"
+                    aria-label={`View ${project.title} on GitHub`}
                   >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-1.5 z-10">
-                  {project.images.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                        idx === currentImageIndex
-                          ? "bg-primary w-4"
-                          : "bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8 z-20">
-          <div className="flex space-x-4">
-            {project.github && project.github !== "#" && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-all hover:scale-110"
-                aria-label="View Source on GitHub"
-              >
-                <Github size={24} />
-              </a>
-            )}
-            {project.liveLink && project.liveLink !== "#" && (
-              <a
-                href={project.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-all hover:scale-110"
-                aria-label="View Live Project"
-              >
-                <ExternalLink size={24} />
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="p-4 md:p-10 flex flex-col flex-grow">
-        <div className="hidden md:flex items-center text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-3">
-          <span className="w-6 md:w-8 h-px bg-primary mr-3"></span>{" "}
-          {project.timeline}
-        </div>
-        <h3 className="text-lg md:text-3xl font-display font-medium mb-2 md:mb-3 tracking-tight dark:text-white">
-          {project.title}
-        </h3>
-
-        {project.hook && (
-          <p className="block md:block text-sm md:text-base font-medium text-primary/80 italic mb-4 leading-relaxed">
-            "{project.hook}"
-          </p>
-        )}
-
-        <div className="space-y-3 md:space-y-6 text-sm md:text-base mb-4 md:mb-6">
-          <div>
-            <p className="font-bold text-dark dark:text-gray-400 mb-1 uppercase text-[10px] tracking-widest opacity-50">
-              The Problem
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2 md:line-clamp-none">
-              {project.problem}
-            </p>
-          </div>
-          {project.solution && (
-            <div className="block md:block">
-              <p className="font-bold text-dark dark:text-gray-400 mb-2 uppercase text-[11px] tracking-widest opacity-50">
-                The Solution
-              </p>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2 md:line-clamp-none">
-                {project.solution}
-              </p>
+                    <Github size={20} />
+                  </a>
+                )}
+                {project.links.live && (
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2.5 md:p-3 bg-white rounded-full text-dark hover:bg-primary hover:text-white transition-all hover:scale-105"
+                    aria-label={`Open ${project.title} live demo`}
+                  >
+                    <ExternalLink size={20} />
+                  </a>
+                )}
+              </div>
             </div>
           )}
         </div>
 
-        <div className="mt-auto">
-          <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-            {project.tech
-              .slice(0, window.innerWidth < 768 ? 3 : undefined)
-              .map((t) => (
+        {/* Card Content */}
+        <div className="p-5 md:p-9 flex flex-col flex-grow">
+          <div className="hidden md:flex items-center text-[10px] font-bold text-primary uppercase tracking-[0.25em] mb-2.5">
+            <span className="w-6 h-px bg-primary mr-3" />
+            {project.timeline}
+          </div>
+
+          <h3 className="text-lg md:text-2xl font-display font-medium mb-3 tracking-tight dark:text-white">
+            {project.title}
+          </h3>
+
+          <div className="space-y-3 text-sm md:text-[15px] mb-5">
+            <div>
+              <p className="font-bold text-dark dark:text-gray-400 mb-0.5 uppercase text-[10px] tracking-widest opacity-50">
+                Problem
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2 md:line-clamp-3">
+                {project.problem}
+              </p>
+            </div>
+            <div>
+              <p className="font-bold text-dark dark:text-gray-400 mb-0.5 uppercase text-[10px] tracking-widest opacity-50">
+                Contribution
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3 md:line-clamp-4">
+                {project.solution}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-auto">
+            <div className="flex flex-wrap gap-1.5 md:gap-2 mb-5">
+              {project.tech.map((t, idx) => (
                 <span
                   key={t}
-                  className="px-3 py-1 bg-accent text-primary text-[10px] font-bold rounded-full uppercase tracking-wider border border-primary/10"
+                  className={`px-2.5 py-1 bg-accent dark:bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-wider border border-primary/15 ${
+                    idx >= 3 ? 'hidden md:inline-flex' : 'inline-flex'
+                  }`}
                 >
                   {t}
                 </span>
               ))}
-            {window.innerWidth < 768 && project.tech.length > 3 && (
-              <span className="px-3 py-1 bg-accent text-primary text-[10px] font-bold rounded-full uppercase tracking-wider border border-primary/10">
-                +{project.tech.length - 3}
-              </span>
-            )}
-          </div>
+              {project.tech.length > 3 && (
+                <span className="inline-flex md:hidden px-2.5 py-1 bg-accent dark:bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase tracking-wider border border-primary/15">
+                  +{project.tech.length - 3}
+                </span>
+              )}
+            </div>
 
-          {project.liveLink && (
-            <a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-base font-bold text-primary group/btn"
-            >
-              <span className="border-b-2 border-primary/20 group-hover:border-primary transition-all pb-1">
-                {project.cta || "View Project →"}
-              </span>
-              <ArrowRight
-                className="ml-2 group-hover:translate-x-2 transition-transform"
-                size={20}
-              />
-            </a>
-          )}
+            <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-gray-100 dark:border-white/5">
+              <a
+                href={`/projects/${project.slug}`}
+                onClick={handleCaseStudyClick}
+                className="inline-flex items-center text-sm md:text-base font-bold text-primary group/btn"
+              >
+                <span className="border-b-2 border-primary/20 group-hover/btn:border-primary transition-all pb-0.5">
+                  {project.cta}
+                </span>
+                <ArrowRight
+                  className="ml-1.5 group-hover/btn:translate-x-1.5 transition-transform"
+                  size={18}
+                />
+              </a>
+
+              {project.links.live && (
+                <a
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ml-auto"
+                >
+                  <span>Live Demo</span>
+                  <ExternalLink size={14} />
+                </a>
+              )}
+
+              {!project.links.live && project.links.github && (
+                <a
+                  href={project.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs md:text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors ml-auto"
+                >
+                  <Github size={15} />
+                  <span>GitHub</span>
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 ProjectCard.displayName = 'ProjectCard';
-

@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Sun, Moon, Monitor, Home, Briefcase, Cpu, Users, Mail } from 'lucide-react';
-import { NAV_ITEMS } from '../../constants/data';
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Monitor,
+  Home,
+  Briefcase,
+  Cpu,
+  Users,
+  Mail,
+  FileDown,
+} from 'lucide-react';
+import { NAV_ITEMS, RESUME_URL } from '../../constants/data';
 import { useTheme, Theme } from '../../context/ThemeContext';
 
-// const LOGO_URL = "https://picsum.photos/seed/popoola-logo/400/120";
-const LOGO_URL = "../images/pop-logo.png";
+const LOGO_URL = '/images/pop-logo.png';
 
 const IconMap: Record<string, React.ReactNode> = {
   Home: <Home size={16} />,
@@ -15,7 +26,11 @@ const IconMap: Record<string, React.ReactNode> = {
   Mail: <Mail size={16} />,
 };
 
-export const Navbar: React.FC = React.memo(() => {
+interface NavbarProps {
+  onNavigate?: (href: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = React.memo(({ onNavigate }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -51,6 +66,17 @@ export const Navbar: React.FC = React.memo(() => {
     setTheme(themes[nextIndex]);
   };
 
+  const handleLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    setMobileMenuOpen(false);
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate(href);
+    }
+  };
+
   const ThemeIcon = () => {
     if (theme === 'system') return <Monitor size={18} />;
     if (theme === 'dark') return <Moon size={18} />;
@@ -65,11 +91,15 @@ export const Navbar: React.FC = React.memo(() => {
           onMouseLeave={() => !isMobile && setIsHovered(false)}
           initial={false}
           animate={{
-            width: isMobile ? '100%' : (isHovered ? 'auto' : '240px'),
+            width: isMobile ? '100%' : isHovered ? 'auto' : '240px',
             backgroundColor:
               scrolled || isHovered || mobileMenuOpen
-                ? (resolvedTheme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)')
-                : (resolvedTheme === 'dark' ? 'rgba(15, 23, 42, 0.1)' : 'rgba(255, 255, 255, 0.1)'),
+                ? resolvedTheme === 'dark'
+                  ? 'rgba(15, 23, 42, 0.95)'
+                  : 'rgba(255, 255, 255, 0.95)'
+                : resolvedTheme === 'dark'
+                  ? 'rgba(15, 23, 42, 0.1)'
+                  : 'rgba(255, 255, 255, 0.1)',
             backdropFilter:
               scrolled || isHovered || mobileMenuOpen
                 ? 'blur(16px)'
@@ -84,11 +114,17 @@ export const Navbar: React.FC = React.memo(() => {
               : { type: 'spring', stiffness: 300, damping: 30 }
           }
           className={`flex items-center justify-between h-14 md:h-16 border pointer-events-auto overflow-hidden ${
-            resolvedTheme === 'dark' ? 'border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]' : 'border-white/20 shadow-2xl'
+            resolvedTheme === 'dark'
+              ? 'border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]'
+              : 'border-white/20 shadow-2xl'
           }`}
         >
           <div className="flex items-center shrink-0">
-            <a href="#home" className="flex items-center">
+            <a
+              href="#home"
+              onClick={(e) => handleLinkClick(e, '#home')}
+              className="flex items-center"
+            >
               <img
                 src={LOGO_URL}
                 alt="POPOOLA"
@@ -107,41 +143,71 @@ export const Navbar: React.FC = React.memo(() => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center space-x-8 ml-10"
+                  className="flex items-center space-x-6 lg:space-x-7 ml-8"
                 >
                   {NAV_ITEMS.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        onClick={(e) => handleLinkClick(e, item.href)}
                         className={`text-[13px] font-medium flex items-center gap-2 transition-colors duration-300 whitespace-nowrap ${
-                          resolvedTheme === 'dark' ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-primary'
+                          resolvedTheme === 'dark'
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-600 hover:text-primary'
                         }`}
                       >
-                        <span className="opacity-70">{IconMap[item.icon || '']}</span>
+                        <span className="opacity-70">
+                          {IconMap[item.icon || '']}
+                        </span>
                         {item.name}
                       </a>
                     </li>
                   ))}
-                  
+
+                  <li>
+                    <a
+                      href={RESUME_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download="Popoola-Resume.pdf"
+                      className={`text-[13px] font-medium flex items-center gap-1.5 transition-colors duration-300 whitespace-nowrap ${
+                        resolvedTheme === 'dark'
+                          ? 'text-gray-300 hover:text-white'
+                          : 'text-gray-600 hover:text-primary'
+                      }`}
+                    >
+                      <FileDown size={15} className="opacity-70" />
+                      <span>Resume</span>
+                    </a>
+                  </li>
+
                   {/* Theme Toggle Button */}
                   <li>
                     <button
+                      type="button"
                       onClick={cycleTheme}
                       className={`p-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
-                        resolvedTheme === 'dark' ? 'bg-white/10 text-yellow-400 hover:bg-white/20' : 'bg-dark/5 text-dark hover:bg-dark/10'
+                        resolvedTheme === 'dark'
+                          ? 'bg-white/10 text-yellow-400 hover:bg-white/20'
+                          : 'bg-dark/5 text-dark hover:bg-dark/10'
                       }`}
                       aria-label="Toggle theme"
                     >
                       <ThemeIcon />
-                      <span className="text-[10px] uppercase font-bold tracking-wider">{theme}</span>
+                      <span className="text-[10px] uppercase font-bold tracking-wider">
+                        {theme}
+                      </span>
                     </button>
                   </li>
 
                   <li>
                     <a
                       href="#contact"
-                      className={`px-6 py-2 rounded-full text-[13px] font-medium transition-all duration-300 whitespace-nowrap ${
-                        resolvedTheme === 'dark' ? 'bg-white text-dark hover:bg-gray-200' : 'bg-dark text-white hover:bg-primary'
+                      onClick={(e) => handleLinkClick(e, '#contact')}
+                      className={`px-5 py-2 rounded-full text-[13px] font-medium transition-all duration-300 whitespace-nowrap ${
+                        resolvedTheme === 'dark'
+                          ? 'bg-white text-dark hover:bg-gray-200'
+                          : 'bg-dark text-white hover:bg-primary'
                       }`}
                     >
                       Work with me
@@ -158,7 +224,9 @@ export const Navbar: React.FC = React.memo(() => {
                 className="ml-4 flex items-center gap-4"
               >
                 <button
+                  type="button"
                   onClick={cycleTheme}
+                  aria-label="Toggle theme"
                   className={`p-2 rounded-full transition-all duration-300 ${
                     resolvedTheme === 'dark' ? 'text-yellow-400' : 'text-dark'
                   }`}
@@ -166,8 +234,12 @@ export const Navbar: React.FC = React.memo(() => {
                   <ThemeIcon />
                 </button>
                 <div className="w-8 h-8 rounded-full bg-dark/5 flex flex-col items-center justify-center space-y-1">
-                  <div className={`w-4 h-0.5 rounded-full ${resolvedTheme === 'dark' ? 'bg-white' : 'bg-dark'}`} />
-                  <div className={`w-4 h-0.5 rounded-full ${resolvedTheme === 'dark' ? 'bg-white' : 'bg-dark'}`} />
+                  <div
+                    className={`w-4 h-0.5 rounded-full ${resolvedTheme === 'dark' ? 'bg-white' : 'bg-dark'}`}
+                  />
+                  <div
+                    className={`w-4 h-0.5 rounded-full ${resolvedTheme === 'dark' ? 'bg-white' : 'bg-dark'}`}
+                  />
                 </div>
               </motion.div>
             )}
@@ -176,7 +248,9 @@ export const Navbar: React.FC = React.memo(() => {
           {/* Mobile Menu Toggle */}
           <div className="flex items-center gap-2 md:hidden">
             <button
+              type="button"
               onClick={cycleTheme}
+              aria-label="Toggle theme"
               className={`p-2 rounded-full transition-all duration-300 ${
                 resolvedTheme === 'dark' ? 'text-yellow-400' : 'text-dark'
               }`}
@@ -184,7 +258,9 @@ export const Navbar: React.FC = React.memo(() => {
               <ThemeIcon />
             </button>
             <button
+              type="button"
               onClick={toggleMobileMenu}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               className={`p-2 transition-colors ${resolvedTheme === 'dark' ? 'text-white' : 'text-dark'} hover:text-primary`}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -200,30 +276,56 @@ export const Navbar: React.FC = React.memo(() => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-0 z-40 pt-24 px-6 md:hidden ${resolvedTheme === 'dark' ? 'bg-slate-950' : 'bg-white'}`}
+            className={`fixed inset-0 z-40 pt-24 px-6 md:hidden overflow-y-auto ${resolvedTheme === 'dark' ? 'bg-slate-950' : 'bg-white'}`}
           >
-            <ul className="flex flex-col space-y-6">
+            <ul className="flex flex-col space-y-6 pb-10">
               {NAV_ITEMS.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => handleLinkClick(e, item.href)}
                     className={`text-3xl font-display font-medium flex items-center gap-4 transition-colors ${
-                      resolvedTheme === 'dark' ? 'text-white hover:text-primary' : 'text-dark hover:text-primary'
+                      resolvedTheme === 'dark'
+                        ? 'text-white hover:text-primary'
+                        : 'text-dark hover:text-primary'
                     }`}
                   >
-                    <span className="opacity-50">{IconMap[item.icon || '']}</span>
+                    <span className="opacity-50">
+                      {IconMap[item.icon || '']}
+                    </span>
                     {item.name}
                   </a>
                 </li>
               ))}
 
-              <li className="pt-6">
+              <li>
+                <a
+                  href={RESUME_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="Popoola-Resume.pdf"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-3xl font-display font-medium flex items-center gap-4 transition-colors ${
+                    resolvedTheme === 'dark'
+                      ? 'text-white hover:text-primary'
+                      : 'text-dark hover:text-primary'
+                  }`}
+                >
+                  <span className="opacity-50">
+                    <FileDown size={22} />
+                  </span>
+                  Resume
+                </a>
+              </li>
+
+              <li className="pt-4">
                 <a
                   href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => handleLinkClick(e, '#contact')}
                   className={`block w-full text-center py-4 rounded-2xl text-lg font-bold transition-colors ${
-                    resolvedTheme === 'dark' ? 'bg-white text-dark hover:bg-gray-200' : 'bg-dark text-white hover:bg-primary'
+                    resolvedTheme === 'dark'
+                      ? 'bg-white text-dark hover:bg-gray-200'
+                      : 'bg-dark text-white hover:bg-primary'
                   }`}
                 >
                   Work with me

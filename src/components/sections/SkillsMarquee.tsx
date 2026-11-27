@@ -1,31 +1,50 @@
 import React from 'react';
-import { SKILLS } from '../../constants/data';
+import { SKILL_GROUPS } from '../../constants/data';
 import { Marquee } from '../common/Marquee';
+
+const PRIMARY_SKILLS = [
+  ...SKILL_GROUPS[0].items, // Backend first
+  ...SKILL_GROUPS[1].items, // Data
+];
+
+const SECONDARY_SKILLS = [
+  ...SKILL_GROUPS[2].items, // Frontend
+  ...SKILL_GROUPS[3].items, // Tools
+];
 
 export const SkillsMarquee: React.FC = React.memo(() => {
   return (
-    <div id="skills" className="py-32 bg-dark dark:bg-slate-950 overflow-hidden relative min-h-[500px] flex items-center justify-center transition-colors duration-300">
+    <div
+      id="skills"
+      className="py-32 bg-dark dark:bg-slate-950 overflow-hidden relative min-h-[500px] flex items-center justify-center transition-colors duration-300"
+    >
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[120px]" />
       </div>
-      
+
       <div className="relative w-full flex flex-col items-center justify-center">
-        {/* Row 1: Moving Left - Rotated Positive */}
+        {/* Row 1 (Secondary: Frontend & Tools) */}
         <div className="absolute w-[120%] rotate-6 scale-110 bg-white/5 dark:bg-white/10 backdrop-blur-md border-y border-white/10 py-6 z-10 shadow-2xl">
-          <Marquee direction="left" speed={20}>
-            {SKILLS.map((skill, i) => (
-              <span key={i} className="text-white text-4xl md:text-7xl font-display font-black mx-16 opacity-40 hover:opacity-100 transition-opacity cursor-default tracking-tighter uppercase italic">
+          <Marquee direction="left" speed={24}>
+            {SECONDARY_SKILLS.map((skill, i) => (
+              <span
+                key={i}
+                className="text-white text-4xl md:text-7xl font-display font-black mx-12 md:mx-16 opacity-40 hover:opacity-100 transition-opacity cursor-default tracking-tighter uppercase italic"
+              >
                 {skill}
               </span>
             ))}
           </Marquee>
         </div>
 
-        {/* Row 2: Moving Right - Rotated Negative */}
+        {/* Row 2 (Primary foreground: Backend & Data) */}
         <div className="absolute w-[120%] -rotate-6 scale-110 bg-primary/20 backdrop-blur-md border-y border-primary/30 py-6 z-20 shadow-2xl">
-          <Marquee direction="right" speed={30}>
-            {SKILLS.map((skill, i) => (
-              <span key={i} className="text-primary text-4xl md:text-7xl font-display font-black mx-16 opacity-90 hover:opacity-100 transition-opacity cursor-default tracking-tighter uppercase italic">
+          <Marquee direction="right" speed={28}>
+            {PRIMARY_SKILLS.map((skill, i) => (
+              <span
+                key={i}
+                className="text-primary text-4xl md:text-7xl font-display font-black mx-12 md:mx-16 opacity-90 hover:opacity-100 transition-opacity cursor-default tracking-tighter uppercase italic"
+              >
                 {skill}
               </span>
             ))}

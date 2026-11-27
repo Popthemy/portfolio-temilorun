@@ -27,9 +27,9 @@ export const Mentorship: React.FC = () => {
         className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
       >
         <img
-          src="https://picsum.photos/seed/popoola-logo/1200/400"
+          src="/images/pop-logo.png"
           alt=""
-          className="w-[150%] max-w-none opacity-10 dark:opacity-5 invert"
+          className="w-[120%] max-w-none opacity-10 dark:opacity-5 invert"
           referrerPolicy="no-referrer"
         />
       </motion.div>
@@ -93,8 +93,7 @@ export const Mentorship: React.FC = () => {
                     Community Contributor
                   </h4>
                   <p className="text-gray-400 leading-relaxed">
-                    Active contributor to LinkedIn Local Nigeria and Oyo Talent
-                    Tribe initiatives.
+                    Contributor to LinkedIn Local Nigeria website development team.
                   </p>
                 </div>
               </motion.div>
@@ -137,7 +136,7 @@ export const Mentorship: React.FC = () => {
                   <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                   <motion.img
                     whileHover={{ scale: 1.02 }}
-                    src="../images/themy-coding.jpg"
+                    src="/images/themy-coding.jpg"
                     alt="Build with Oyo facilitation"
                     className="rounded-[2.5rem] shadow-2xl relative z-10 grayscale hover:grayscale-0 transition-all duration-700"
                     referrerPolicy="no-referrer"
